@@ -3,19 +3,12 @@ package com.malloc.tmc;
 public class ResourceType {
 
     // 名称，制作人，日期，大小，后缀
-    String resourceName;
-    String resourceCreator;
-    String resourceDate;
-    String resourceSize;
-    String resourceSuiffx;
-    String resourceFullName;
-
-    // private String resourceName;
-    // private String resourceCreator;
-    // private String resourceDate;
-    // private String resourceSize;
-    // private String resourceSuiffx;
-    // private String resourceFullName;
+    private String resourceName;
+    private String resourceCreator;
+    private String resourceDate;
+    private String resourceSize;
+    private String resourceSuiffx;
+    private String resourceFullName;
 
     public ResourceType() {
         resourceName = null;
@@ -29,9 +22,28 @@ public class ResourceType {
     // 将FullName分解
     public ResourceType(String sFullName) {
         setFullName(sFullName);
-        fullNameBreakUp();
+        // fullNameBreakUp(sFullName);
+        String[] ss = new String[10];
+        ss = sFullName.split("-", 5);
+        setName(ss[0]);
+        setCreator(ss[1]);
+        setDate(ss[2]);
+        setSize(ss[3]);
+        setSuffix(ss[4]);
 
     }
+
+    // void fullNameBreakUp(String sfn) {
+    // String[] ss = new String[10];
+    // ss = sfn.split("-", 5);
+    // setName(ss[0]);
+    // setCreator(ss[1]);
+    // setDate(ss[2]);
+    // setSize(ss[3]);
+    // setSuffix(ss[4]);
+    //
+    // }
+
 
     //
     public ResourceType(String sName, String sCreator, String sDate,
@@ -44,16 +56,23 @@ public class ResourceType {
         setFullName(sName + "-" + sCreator + "-" + sDate + "-" + sSize + "-"
                 + sSuiffx);
     }
-
-    void fullNameBreakUp() {
-
-    }
-
     public void printRType() {
         System.out.println("RT : " + this.getFullName()
-                + "\nname\tcreator\tdate\tsize\tsuffix\n" + this.getName()
-                + "\t" + this.getCreator() + "\t" + this.getDate() + "\t"
-                + this.getSize() + "\t" + this.getSuffix() + "\n");
+                + "\nname\t\tcreator\t\tdate\t\tsize\t\tsuffix\n"
+                + this.getName() + "\t\t" + this.getCreator() + "\t\t"
+                + this.getDate() + "\t\t" + this.getSize() + "\t\t"
+                + this.getSuffix() + "\n");
+    }
+
+    public void printRType(String sFullName) {
+
+        String[] ss = new String[10];
+        ss = sFullName.split("-", 5);
+
+        System.out.println("RT : " + sFullName
+                + "\nname\t\tcreator\t\tdate\t\tsize\t\tsuffix\n" + ss[0]
+                + "\t\t" + ss[1] + "\t\t" + ss[2] + "\t\t" + ss[3] + "\t\t"
+                + ss[4] + "\n");
     }
 
     // get&set resourceName
@@ -61,7 +80,7 @@ public class ResourceType {
         return resourceName;
     }
 
-    public void setName(String rcName) {
+    private void setName(String rcName) {
         resourceName = rcName;
     }
 
@@ -70,7 +89,7 @@ public class ResourceType {
         return resourceCreator;
     }
 
-    public void setCreator(String rcCreator) {
+    private void setCreator(String rcCreator) {
         resourceCreator = rcCreator;
     }
 
@@ -79,7 +98,7 @@ public class ResourceType {
         return resourceDate;
     }
 
-    public void setDate(String rcDate) {
+    private void setDate(String rcDate) {
         resourceDate = rcDate;
     }
 
@@ -88,7 +107,7 @@ public class ResourceType {
         return resourceSize;
     }
 
-    public void setSize(String rcSize) {
+    private void setSize(String rcSize) {
         resourceSize = rcSize;
     }
 
@@ -97,7 +116,7 @@ public class ResourceType {
         return resourceSuiffx;
     }
 
-    public void setSuffix(String rcSuffix) {
+    private void setSuffix(String rcSuffix) {
         resourceSuiffx = rcSuffix;
     }
 
@@ -106,7 +125,7 @@ public class ResourceType {
         return resourceFullName;
     }
 
-    public void setFullName(String rcFullName) {
+    private void setFullName(String rcFullName) {
         resourceFullName = rcFullName;
     }
 

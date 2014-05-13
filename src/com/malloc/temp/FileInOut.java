@@ -15,7 +15,7 @@ import java.nio.channels.FileChannel;
 
 public class FileInOut {
     static final String TMResource = "X:/EclipseWorkspace/TMResrouce";
-    static final String TMData = "X:/EclipseWorkspace/TMData/DataStoreFile";
+    static final String TMData = "X:/EclipseWorkspace/TMObject/DataStoreFile";
 
     // 1.按字节读取文件内容
     public static void func1(String filePath) {

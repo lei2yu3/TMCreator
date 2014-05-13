@@ -23,6 +23,7 @@ public class TMCreator {
 
     // path of TMResource
     static final String TMResource = "X:/EclipseWorkspace/TMResrouce";
+    static final String TMObject = "";
     //static final String TMResource = "X:\\EclipseWorkspace\\TMResrouce";
     File dir = new File(TMResource);
 
@@ -57,7 +58,7 @@ public class TMCreator {
     }
 
     //将读取到的资源信息存储到指定文件
-    public static void resourceNameAppend(String filePath, String appendContent) {
+    public static void resourceAppend(String filePath, String appendContent) {
         try {
             // 打开一个写文件器，FileWriter构造函数中的第二个参数true表示以追加形式写文件
             FileWriter fw = new FileWriter(filePath, true);
@@ -80,10 +81,15 @@ public class TMCreator {
                 + "" + START + ")\n");
 
         
-        ResourceType rt1 = new ResourceType();
+        ResourceType rt1 = new ResourceType("WWE-Z-20140515-45mb-rmvb");
         rt1.printRType();
+        //System.out.println(rt1.);
+        rt1.printRType(rt1.getFullName());
+
+
         ResourceType rt = new ResourceType("a5", "1a", "a2", "3a", "4a");
         rt.printRType();
+        rt.printRType(rt.getFullName());
         /*
          * for (String x : Video) { System.out.println(x); }
          * 

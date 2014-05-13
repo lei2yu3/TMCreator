@@ -10,7 +10,7 @@ public class FileEndAppend {
     
     
 
-    static final String TMData = "X:/EclipseWorkspace/TMData/DataStoreFile";
+    static final String TMData = "X:/EclipseWorkspace/TMObject/DataStoreFile";
     
 
     /**
