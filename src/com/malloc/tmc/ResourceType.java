@@ -44,7 +44,6 @@ public class ResourceType {
     //
     // }
 
-
     //
     public ResourceType(String sName, String sCreator, String sDate,
             String sSize, String sSuiffx) {
@@ -56,11 +55,12 @@ public class ResourceType {
         setFullName(sName + "-" + sCreator + "-" + sDate + "-" + sSize + "-"
                 + sSuiffx);
     }
+
     public void printRType() {
         System.out.println("RT : " + this.getFullName()
                 + "\nname\t\tcreator\t\tdate\t\tsize\t\tsuffix\n"
                 + this.getName() + "\t\t" + this.getCreator() + "\t\t"
-                + this.getDate() + "\t\t" + this.getSize() + "\t\t"
+                + this.getDate() + "\t" + this.getSize() + "\t\t"
                 + this.getSuffix() + "\n");
     }
 
@@ -71,7 +71,7 @@ public class ResourceType {
 
         System.out.println("RT : " + sFullName
                 + "\nname\t\tcreator\t\tdate\t\tsize\t\tsuffix\n" + ss[0]
-                + "\t\t" + ss[1] + "\t\t" + ss[2] + "\t\t" + ss[3] + "\t\t"
+                + "\t\t" + ss[1] + "\t\t" + ss[2] + "\t" + ss[3] + "\t\t"
                 + ss[4] + "\n");
     }
 

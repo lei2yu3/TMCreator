@@ -25,8 +25,8 @@ public class FileTraverse {
             if (files[i].isDirectory()) {
                 refreshFileList(files[i].getAbsolutePath());
             } else {
-                //String strFileName = files[i].getAbsolutePath();// .toLowerCase();
-                //files[i].getPath();
+                // String strFileName = files[i].getAbsolutePath();
+                // files[i].getPath();
                 // System.out.println("---" + strFileName);
                 System.out.println("---" + files[i].getName());
                 filelist.add(files[i].getAbsolutePath());
@@ -40,9 +40,10 @@ public class FileTraverse {
         long a = System.currentTimeMillis();
 
         refreshFileList("X:\\EclipseWorkspace\\TMResrouce");
-        
-        System.out.println("There" + (filelist.size() > 1 ? " are " : " is ") + filelist.size() + (filelist.size() > 1 ? " files" : " file"));
-        
+
+        System.out.println("There" + (filelist.size() > 1 ? " are " : " is ")
+                + filelist.size() + (filelist.size() > 1 ? " files" : " file"));
+
         System.out.println("Time Cost : " + (System.currentTimeMillis() - a));
     }
 }

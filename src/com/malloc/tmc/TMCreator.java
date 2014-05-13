@@ -1,10 +1,7 @@
 package com.malloc.tmc;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TMCreator {
 
@@ -24,8 +21,12 @@ public class TMCreator {
     // path of TMResource
     static final String TMResource = "X:/EclipseWorkspace/TMResrouce";
     static final String TMObject = "";
-    //static final String TMResource = "X:\\EclipseWorkspace\\TMResrouce";
+    // static final String TMResource = "X:\\EclipseWorkspace\\TMResrouce";
+
     File dir = new File(TMResource);
+
+    // 存储
+    static ArrayList<ResourceType> RTArray = new ArrayList<ResourceType>();
 
     // 以递归的方式遍历目录及其子目录的所有文件
     public static void directoryTraverseByRecursion(String sPath) {
@@ -44,32 +45,34 @@ public class TMCreator {
             if (arrayFile[i].isDirectory()) {
                 // getAbsolutePath返回此路径名的规范路径名字符串，getPath将路径名转换为一个路径名字符串
                 directoryTraverseByRecursion(arrayFile[i].getAbsolutePath());
+
                 // getName返回由此路径名表示的文件或目录的名称
                 System.out.println("-" + arrayFile[i].getName() + "\n");
-            } else {
-                System.out.println("---" + arrayFile[i].getName());
 
-                // TO-DO
-                // store filename/file in arraylist
-                // filelist.add(arrayFile[i].getName());
-                // filelist.add(arrayFile[i]);
+            } else {
+                // 将文件的ResourceType对象保存到ArrayList
+                ResourceType rt = new ResourceType(arrayFile[i].getName());
+                RTArray.add(rt);
+
+                System.out.println("---" + arrayFile[i].getName());
             }
         }
     }
 
-    //将读取到的资源信息存储到指定文件
-    public static void resourceAppend(String filePath, String appendContent) {
-        try {
-            // 打开一个写文件器，FileWriter构造函数中的第二个参数true表示以追加形式写文件
-            FileWriter fw = new FileWriter(filePath, true);
-            fw.write(appendContent);
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    //main
+    // 将读取到的资源信息存储到指定文件
+    // public static void resourceAppend(String filePath, String appendContent)
+    // {
+    // try {
+    // // 打开一个写文件器，FileWriter构造函数中的第二个参数true表示以追加形式写文件
+    // FileWriter fw = new FileWriter(filePath, true);
+    // fw.write(appendContent);
+    // fw.close();
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+    // }
+
+    // main for test
     public static void main(String[] args) {
         // currentTimeMillis返回当前时间距离1970-01-01零点的时间差，单位ms
         long START = System.currentTimeMillis();
@@ -80,23 +83,28 @@ public class TMCreator {
         System.out.println("Time Cost: " + (END - START) + "ms (" + END + "-"
                 + "" + START + ")\n");
 
-        
-        ResourceType rt1 = new ResourceType("WWE-Z-20140515-45mb-rmvb");
-        rt1.printRType();
-        //System.out.println(rt1.);
-        rt1.printRType(rt1.getFullName());
+        System.out.println("RTArray size = " + RTArray.size());
+        for (ResourceType rt : RTArray) {
+            rt.printRType();
+        }
 
+        RTArray.clear();
 
-        ResourceType rt = new ResourceType("a5", "1a", "a2", "3a", "4a");
-        rt.printRType();
-        rt.printRType(rt.getFullName());
-        /*
-         * for (String x : Video) { System.out.println(x); }
-         * 
-         * for (int i = 0; i < Video.length; i++) {
-         * System.out.println(Video[i]); }
-         * 
-         * System.out.println(TMResource);
-         */
+        // ResourceType rt1 = new ResourceType("WWE-Z-20140515-45mb-rmvb");
+        // rt1.printRType();
+        // rt1.printRType(rt1.getFullName());
+        //
+        //
+        // ResourceType rt = new ResourceType("a5", "1a", "a2", "3a", "4a");
+        // rt.printRType();
+        // rt.printRType(rt.getFullName());
+
+        // for (String x : Video) {
+        // System.out.println(x);
+        // }
+        // for (int i = 0; i < Video.length; i++) {
+        // System.out.println(Video[i]);
+        // }
+        // System.out.println(TMResource);
     }
 }
