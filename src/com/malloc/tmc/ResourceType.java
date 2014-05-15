@@ -23,7 +23,7 @@ public class ResourceType {
     public ResourceType(String sFullName) {
         setFullName(sFullName);
         // fullNameBreakUp(sFullName);
-        String[] ss = new String[10];
+        String[] ss = new String[5];
         ss = sFullName.split("-", 5);
         setName(ss[0]);
         setCreator(ss[1]);

@@ -2,6 +2,8 @@ package com.malloc.tmc;
 
 import java.io.File;
 import java.util.ArrayList;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 public class TMCreator {
 
@@ -43,18 +45,26 @@ public class TMCreator {
 
         for (int i = 0; i < arrayFile.length; i++) {
             if (arrayFile[i].isDirectory()) {
-                // getAbsolutePath返回此路径名的规范路径名字符串，getPath将路径名转换为一个路径名字符串
-                directoryTraverseByRecursion(arrayFile[i].getAbsolutePath());
-
                 // getName返回由此路径名表示的文件或目录的名称
                 System.out.println("-" + arrayFile[i].getName() + "\n");
 
+                // getAbsolutePath返回此路径名的规范路径名字符串，getPath将路径名转换为一个路径名字符串
+                directoryTraverseByRecursion(arrayFile[i].getAbsolutePath());
+
             } else {
-                // 将文件的ResourceType对象保存到ArrayList
+                System.out.println("---" + arrayFile[i].getName());
+
                 ResourceType rt = new ResourceType(arrayFile[i].getName());
+
+                // 判断文件名是否符合命名规范
+                // if (rt.getFullName() == null || rt.getName() == null
+                // || rt.getCreator() == null || rt.getDate() == null
+                // || rt.getSize() == null || rt.getSuffix() == null)
+                // continue;
+
+                // 将文件的ResourceType对象保存到ArrayList
                 RTArray.add(rt);
 
-                System.out.println("---" + arrayFile[i].getName());
             }
         }
     }
@@ -71,6 +81,10 @@ public class TMCreator {
     // e.printStackTrace();
     // }
     // }
+
+    public TMCreator() {
+
+    }
 
     // main for test
     public static void main(String[] args) {
