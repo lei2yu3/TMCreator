@@ -2,7 +2,11 @@ package com.malloc.tmc;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 public class TMCreator {
@@ -104,6 +108,26 @@ public class TMCreator {
 
         RTArray.clear();
 
+        // 创建TM
+        TopicMapStoreIF store = new InMemoryTopicMapStore();
+        TopicMapIF topicmap = store.getTopicMap();
+        TopicMapBuilderIF builder = topicmap.getBuilder();
+
+        // 添加Topic
+        for(String ss : Video){
+            builder.makeTopicName(builder.makeTopic(), ss);
+        }
+        
+        
+        //有个String数组，我想用数组里的每个String当作是变量名，
+        //变量名为前缀p后接String，这样要怎么实现啊？就是下面的p#SS的部分
+//        String name[] = {...};
+//        for (String SS : name) {
+//            Person p#SS = new Person(SS);
+//            getNickname(p#SS);
+//        }
+
+      
         // ResourceType rt1 = new ResourceType("WWE-Z-20140515-45mb-rmvb");
         // rt1.printRType();
         // rt1.printRType(rt1.getFullName());

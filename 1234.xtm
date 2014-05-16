@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <topic id="id16">
-    <instanceOf>
-      <topicRef xlink:href="#id14"></topicRef>
-    </instanceOf>
+  <topic id="id25">
     <baseName>
       <instanceOf>
         <topicRef xlink:href="#id3"></topicRef>
       </instanceOf>
-      <baseNameString>Ontopia</baseNameString>
+      <baseNameString>Employer</baseNameString>
     </baseName>
-    <occurrence>
-      <instanceOf>
-        <topicRef xlink:href="#id18"></topicRef>
-      </instanceOf>
-      <resourceData>http://g.cn</resourceData>
-    </occurrence>
   </topic>
-  <topic id="id14">
+  <topic id="id33">
     <baseName>
       <instanceOf>
         <topicRef xlink:href="#id3"></topicRef>
       </instanceOf>
-      <baseNameString>Company</baseNameString>
+      <baseNameString>video</baseNameString>
     </baseName>
   </topic>
   <topic id="id4">
@@ -42,13 +33,67 @@
       <resourceData>I am charming!</resourceData>
     </occurrence>
   </topic>
-  <topic id="id25">
+  <topic id="id23">
     <baseName>
       <instanceOf>
         <topicRef xlink:href="#id3"></topicRef>
       </instanceOf>
-      <baseNameString>Employer</baseNameString>
+      <baseNameString>Employee</baseNameString>
     </baseName>
+  </topic>
+  <topic id="id14">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Company</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id6">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Charming</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id16">
+    <instanceOf>
+      <topicRef xlink:href="#id14"></topicRef>
+    </instanceOf>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Ontopia</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>http://g.cn</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id18">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>WebSite</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id21">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Employment</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id3">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+    </subjectIdentity>
   </topic>
   <topic id="id9">
     <instanceOf>
@@ -67,20 +112,12 @@
       <resourceData>I am CUTE!</resourceData>
     </occurrence>
   </topic>
-  <topic id="id18">
+  <topic id="id11">
     <baseName>
       <instanceOf>
         <topicRef xlink:href="#id3"></topicRef>
       </instanceOf>
-      <baseNameString>WebSite</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id23">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Employee</baseNameString>
+      <baseNameString>Cute</baseNameString>
     </baseName>
   </topic>
   <topic id="id1">
@@ -91,34 +128,6 @@
       <baseNameString>Developer</baseNameString>
     </baseName>
   </topic>
-  <topic id="id3">
-    <subjectIdentity>
-      <subjectIndicatorRef xlink:href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
-    </subjectIdentity>
-  </topic>
-  <topic id="id6">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Charming</baseNameString>
-    </baseName>
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Cute</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id21">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Employment</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id11"></topic>
   <association>
     <instanceOf>
       <topicRef xlink:href="#id21"></topicRef>
@@ -142,15 +151,15 @@
     </instanceOf>
     <member>
       <roleSpec>
-        <topicRef xlink:href="#id25"></topicRef>
-      </roleSpec>
-      <topicRef xlink:href="#id16"></topicRef>
-    </member>
-    <member>
-      <roleSpec>
         <topicRef xlink:href="#id23"></topicRef>
       </roleSpec>
       <topicRef xlink:href="#id9"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#id25"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#id16"></topicRef>
     </member>
   </association>
 </topicMap>

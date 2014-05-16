@@ -30,18 +30,20 @@ public class ResourceType {
         setDate(ss[2]);
         setSize(ss[3]);
         setSuffix(ss[4]);
-
     }
 
-    // void fullNameBreakUp(String sfn) {
+    // ResourceType fullNameBreakUp(String sfn) {
+    // ResourceType rt = new ResourceType();
     // String[] ss = new String[10];
     // ss = sfn.split("-", 5);
-    // setName(ss[0]);
-    // setCreator(ss[1]);
-    // setDate(ss[2]);
-    // setSize(ss[3]);
-    // setSuffix(ss[4]);
+    // rt.setName(ss[0]);
+    // rt.setCreator(ss[1]);
+    // rt.setDate(ss[2]);
+    // rt.setSize(ss[3]);
+    // rt.setSuffix(ss[4]);
+    // rt.setFullName(sfn);
     //
+    // return rt;
     // }
 
     //
@@ -62,6 +64,14 @@ public class ResourceType {
                 + this.getName() + "\t\t" + this.getCreator() + "\t\t"
                 + this.getDate() + "\t" + this.getSize() + "\t\t"
                 + this.getSuffix() + "\n");
+    }
+
+    public void printRType(ResourceType rt) {
+        System.out.println("RT : " + rt.getFullName()
+                + "\nname\t\tcreator\t\tdate\t\tsize\t\tsuffix\n"
+                + rt.getName() + "\t\t" + rt.getCreator() + "\t\t"
+                + rt.getDate() + "\t" + rt.getSize() + "\t\t" + rt.getSuffix()
+                + "\n");
     }
 
     public void printRType(String sFullName) {

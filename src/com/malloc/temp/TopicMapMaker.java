@@ -1,6 +1,10 @@
 package com.malloc.temp;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import org.tmapi.core.Scoped;
+import org.tmapi.core.Variant;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -10,6 +14,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 
@@ -28,22 +33,20 @@ public class TopicMapMaker {
 
         TopicIF topicMalloc = builder.makeTopic();
         builder.makeTopicName(topicMalloc, "Malloc");
-        topicMalloc.addType(topicDeveloper); // add type(association of
-                                             // InstenceOf)
+        topicMalloc.addType(topicDeveloper); // association of InstenceOf
         // 添加Occurrence
         TopicIF occurenceCharming = builder.makeTopic();
         builder.makeTopicName(occurenceCharming, "Charming");
-        OccurrenceIF o1 = builder.makeOccurrence(topicMalloc,
+        OccurrenceIF oCharming = builder.makeOccurrence(topicMalloc,
                 occurenceCharming, "I am charming!");
 
         TopicIF topicTreeZ = builder.makeTopic();
         builder.makeTopicName(topicTreeZ, "TreeZ");
-        topicTreeZ.addType(topicDeveloper); // add type(association of
-                                            // InstenceOf)
+        topicTreeZ.addType(topicDeveloper); // association of InstenceOf
         // 添加Occurrence
         TopicIF occurenceCute = builder.makeTopic();
-        builder.makeTopicName(occurenceCharming, "Cute");
-        OccurrenceIF o2 = builder.makeOccurrence(topicTreeZ, occurenceCute,
+        builder.makeTopicName(occurenceCute, "Cute");
+        OccurrenceIF oCute = builder.makeOccurrence(topicTreeZ, occurenceCute,
                 "I am CUTE!");
 
         TopicIF topicCompany = builder.makeTopic();
@@ -51,18 +54,18 @@ public class TopicMapMaker {
 
         TopicIF topicOntopia = builder.makeTopic();
         builder.makeTopicName(topicOntopia, "Ontopia");
-        topicOntopia.addType(topicCompany); // add type(association of
-                                            // InstenceOf)
+        topicOntopia.addType(topicCompany); // association of InstenceOf
         // 添加Occurrence
         TopicIF occurenceWebSite = builder.makeTopic();
         builder.makeTopicName(occurenceWebSite, "WebSite");
-        OccurrenceIF o3 = builder.makeOccurrence(topicOntopia,
+        OccurrenceIF oWebSite = builder.makeOccurrence(topicOntopia,
                 occurenceWebSite, "http://g.cn"); // 外部实例 makeOccurrence(TopicIF
                                                   // topic, TopicIF occurs_type,
                                                   // LocatorIF locator)
 
         TopicIF topicEmployment = builder.makeTopic();
-        builder.makeTopicName(topicEmployment, "Employment");
+        TopicNameIF tn1 = builder.makeTopicName(topicEmployment, "Employment");
+        ArrayList<TopicIF> aaa = new ArrayList<TopicIF>();
 
         TopicIF topicEmployee = builder.makeTopic();
         builder.makeTopicName(topicEmployee, "Employee");
@@ -71,17 +74,21 @@ public class TopicMapMaker {
         builder.makeTopicName(topicEmployer, "Employer");
 
         // 添加Association
-        AssociationIF aEmployment = builder.makeAssociation(topicEmployment);
-        AssociationRoleIF rEmployee1 = builder.makeAssociationRole(aEmployment,
-                topicEmployee, topicMalloc);
-        AssociationRoleIF rEmployer1 = builder.makeAssociationRole(aEmployment,
-                topicEmployer, topicOntopia);
-
         AssociationIF aEmployment1 = builder.makeAssociation(topicEmployment);
-        AssociationRoleIF rEmployee2 = builder.makeAssociationRole(
-                aEmployment1, topicEmployee, topicTreeZ);
-        AssociationRoleIF rEmployer2 = builder.makeAssociationRole(
+        AssociationRoleIF arEmployee1 = builder.makeAssociationRole(
+                aEmployment1, topicEmployee, topicMalloc);
+        AssociationRoleIF arEmployer1 = builder.makeAssociationRole(
                 aEmployment1, topicEmployer, topicOntopia);
+
+        AssociationIF aEmployment2 = builder.makeAssociation(topicEmployment);
+        AssociationRoleIF arEmployee2 = builder.makeAssociationRole(
+                aEmployment2, topicEmployee, topicTreeZ);
+        AssociationRoleIF arEmployer2 = builder.makeAssociationRole(
+                aEmployment2, topicEmployer, topicOntopia);
+
+        // Object _ix = topicmap.getIndex("net.ontopia.topicmaps.core.index." +
+        // "ScopeIndexIF");
+        // ScopeIndexIF ix = ((ScopeIndexIF)_ix);
 
         // 添加Scope
         // TopicIF themeEmploys = builder.makeTopic();
@@ -89,8 +96,8 @@ public class TopicMapMaker {
         // TopicIF themeEmploed = builder.makeTopic();
         // builder.makeTopicName(themeEmploed, "Emploed");
         //
-        // ScopedIF sEmploys = null;
-        // ScopedIF sEmployed = null;
+        // scopedAIF sEmploys = null;
+        // scopedAIF sEmployed = null;
         //
         // sEmploys.addTheme(themeEmploys);
         // sEmployed.addTheme(themeEmploed);
@@ -116,14 +123,14 @@ public class TopicMapMaker {
         // topicTreeZ);
         // AssociationRoleIF ar4 = builder.makeAssociationRole(a2, ARTClass,
         // topicDeveloper);
-
-        // 添加Association范例
+        //
         // AssociationIF a3 = builder.makeAssociation(ATInstenceOf);
         // AssociationRoleIF ar5 = builder.makeAssociationRole(a3, ARTInstence,
         // topicOntopia);
         // AssociationRoleIF ar6 = builder.makeAssociationRole(a3, ARTClass,
         // topicCompany);
 
+        // 添加Association范例
         // TopicIF at1 = builder.makeTopic();
         // builder.makeTopicName(at1, "Ass_Type1");
         // TopicIF at2 = builder.makeTopic();
@@ -151,6 +158,35 @@ public class TopicMapMaker {
         // AssociationRoleIF r3 = builder.makeAssociationRole(Ass2, art1, t1);
         // AssociationRoleIF r4 = builder.makeAssociationRole(Ass2, art2, t3);
 
+        
+        
+
+        String Video[] = { "rmvb", "avi", "mp4", "flv", "wmv" };
+
+        TopicIF tVideo = builder.makeTopic();
+        builder.makeTopicName(tVideo, "video");
+        
+        // 添加Topic
+        for(String ss : Video){
+            try {
+                TopicIF bbb = (TopicIF)Class.forName(ss).newInstance();
+                bbb = builder.makeTopic();
+                builder.makeTopicName(bbb, ss);
+            } catch (InstantiationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        
+        
+        
         // having created the topic map we are now ready to export it
         try {
             new XTMTopicMapWriter("1234.xtm").write(topicmap);
