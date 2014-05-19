@@ -1,6 +1,7 @@
 package com.malloc.tmc;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -8,6 +9,7 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 
 public class TMCreator {
 
@@ -17,6 +19,8 @@ public class TMCreator {
      * Book书籍，"txt", "pdf", "doc", "ppt" Code代码，"cpp", "h", "java", "cs", "py",
      * "xml" Other其他，"exe", "plist", "bat"
      */
+    static final String Resource[] = { "Video", "Audio", "Diagram", "Book",
+            "Code", "Other" };
     static final String Video[] = { "rmvb", "avi", "mp4", "flv", "wmv" };
     static final String Audio[] = { "mp3", "wav", "ape", "ogg" };
     static final String Diagram[] = { "jpg", "bmp", "png", "git" };
@@ -97,37 +101,167 @@ public class TMCreator {
 
         directoryTraverseByRecursion(TMResource);
 
-        long END = System.currentTimeMillis();
-        System.out.println("Time Cost: " + (END - START) + "ms (" + END + "-"
-                + "" + START + ")\n");
-
-        System.out.println("RTArray size = " + RTArray.size());
-        for (ResourceType rt : RTArray) {
-            rt.printRType();
-        }
-
-        RTArray.clear();
+//        long END = System.currentTimeMillis();
+        
+//        System.out.println("Time Cost: " + (END - START) + "ms (" + END + "-"
+//                + "" + START + ")\n");
+//
+//        System.out.println("RTArray size = " + RTArray.size());
+//        for (ResourceType rt : RTArray) {
+//            rt.printRType();
+//        }
+//
+//        RTArray.clear();
 
         // 创建TM
         TopicMapStoreIF store = new InMemoryTopicMapStore();
         TopicMapIF topicmap = store.getTopicMap();
         TopicMapBuilderIF builder = topicmap.getBuilder();
 
-        // 添加Topic
-        for(String ss : Video){
-            builder.makeTopicName(builder.makeTopic(), ss);
+
+        // topic of resource
+        TopicIF topicResource = builder.makeTopic();
+        builder.makeTopicName(topicResource, "Resource");
+        
+        TopicIF topicVideo = builder.makeTopic();
+        builder.makeTopicName(topicVideo, "Video");
+        topicVideo.addType(topicResource);
+        TopicIF topicAudio = builder.makeTopic();
+        builder.makeTopicName(topicAudio, "Audio");
+        topicAudio.addType(topicResource);
+        TopicIF topicDiagram = builder.makeTopic();
+        builder.makeTopicName(topicDiagram, "Diagram");
+        topicDiagram.addType(topicResource);
+        TopicIF topicBook = builder.makeTopic();
+        builder.makeTopicName(topicBook, "Book");
+        topicBook.addType(topicResource);
+        TopicIF topicCode = builder.makeTopic();
+        builder.makeTopicName(topicCode, "Code");
+        topicCode.addType(topicResource);
+        TopicIF topicOther = builder.makeTopic();
+        builder.makeTopicName(topicOther, "Other");
+        topicOther.addType(topicResource);
+
+        // topic of Video
+        TopicIF topicmp3 = builder.makeTopic();
+        builder.makeTopicName(topicmp3, "mp3");
+        topicmp3.addType(topicAudio);
+        TopicIF topicape = builder.makeTopic();
+        builder.makeTopicName(topicape, "ape");
+        topicape.addType(topicAudio);
+        TopicIF topicogg = builder.makeTopic();
+        builder.makeTopicName(topicogg, "ogg");
+        topicogg.addType(topicAudio);
+
+        // topic of Book
+        TopicIF topicpdf = builder.makeTopic();
+        builder.makeTopicName(topicpdf, "pdf");
+        topicpdf.addType(topicBook);
+        TopicIF topictxt = builder.makeTopic();
+        builder.makeTopicName(topictxt, "txt");
+        topictxt.addType(topicBook);
+
+        // topic of Code
+        TopicIF topiccpp = builder.makeTopic();
+        builder.makeTopicName(topiccpp, "cpp");
+        topiccpp.addType(topicCode);
+
+        // topic of Diagram
+        TopicIF topicbmp = builder.makeTopic();
+        builder.makeTopicName(topicbmp, "bmp");
+        topicbmp.addType(topicDiagram);
+        TopicIF topicjpg = builder.makeTopic();
+        builder.makeTopicName(topicjpg, "jpg");
+        topicjpg.addType(topicDiagram);
+
+        // topic of Other
+        TopicIF topicplist = builder.makeTopic();
+        builder.makeTopicName(topicplist, "plist");
+        topicplist.addType(topicOther);
+
+        // topic of Video
+        TopicIF topicavi = builder.makeTopic();
+        builder.makeTopicName(topicavi, "avi");
+        topicavi.addType(topicVideo);
+        TopicIF topicrmvb = builder.makeTopic();
+        builder.makeTopicName(topicrmvb, "rmvb");
+        topicrmvb.addType(topicVideo);
+
+        
+
+        for (ResourceType rt : RTArray) {
+            TopicIF tTemp = builder.makeTopic();
+            builder.makeTopicName(tTemp, rt.getFullName());
+            switch(rt.getSuffix()){
+            case "mp3":
+                tTemp.addType(topicmp3);
+                break;
+            case "ogg":
+                tTemp.addType(topicogg);
+                break;
+            case "ape":
+                tTemp.addType(topicape);
+                break;
+            case "avi":
+                tTemp.addType(topicavi);
+                break;
+            case "rmvb":
+                tTemp.addType(topicrmvb);
+                break;
+            case "bmp":
+                tTemp.addType(topicbmp);
+                break;
+            case "jpg":
+                tTemp.addType(topicjpg);
+                break;
+            case "txt":
+                tTemp.addType(topictxt);
+                break;
+            case "pdf":
+                tTemp.addType(topicpdf);
+                break;
+            case "cpp":
+                tTemp.addType(topiccpp);
+                break;
+            case "plist":
+                tTemp.addType(topicplist);
+                break;
+            default:
+                break;
+            }
         }
         
         
-        //有个String数组，我想用数组里的每个String当作是变量名，
-        //变量名为前缀p后接String，这样要怎么实现啊？就是下面的p#SS的部分
-//        String name[] = {...};
-//        for (String SS : name) {
-//            Person p#SS = new Person(SS);
-//            getNickname(p#SS);
-//        }
+        // having created the topic map we are now ready to export it
+        try {
+            new XTMTopicMapWriter("xxx.xtm").write(topicmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-      
+        
+        
+
+        RTArray.clear();
+        
+
+        
+        
+      long END = System.currentTimeMillis();
+        
+      System.out.println("Time Cost: " + (END - START) + "ms (" + END + "-"
+              + "" + START + ")\n");
+        
+        
+        //test
+        // 有个String数组，我想用数组里的每个String当作是变量名，
+        // 变量名为前缀p后接String，这样要怎么实现啊？就是下面的p#SS的部分
+        // String name[] = {...};
+        // for (String SS : name) {
+        // Person p#SS = new Person(SS);
+        // getNickname(p#SS);
+        // }
+
         // ResourceType rt1 = new ResourceType("WWE-Z-20140515-45mb-rmvb");
         // rt1.printRType();
         // rt1.printRType(rt1.getFullName());

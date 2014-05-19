@@ -1,5 +1,11 @@
 package com.malloc.tmc;
 
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+
 public class ResourceType {
 
     // 名称，制作人，日期，大小，后缀
@@ -9,6 +15,7 @@ public class ResourceType {
     private String resourceSize;
     private String resourceSuiffx;
     private String resourceFullName;
+    //private TopicIF resourceTopic;
 
     public ResourceType() {
         resourceName = null;
@@ -17,6 +24,7 @@ public class ResourceType {
         resourceSize = null;
         resourceSuiffx = null;
         resourceFullName = null;
+        //resourceTopic = null;
     }
 
     // 将FullName分解
@@ -30,8 +38,16 @@ public class ResourceType {
         setDate(ss[2]);
         setSize(ss[3]);
         setSuffix(ss[4]);
+        //resourceTopic = null;
     }
 
+    
+    public void initTopicMapStore(){
+        TopicMapStoreIF store = new InMemoryTopicMapStore();
+        TopicMapIF topicmap = store.getTopicMap();
+        TopicMapBuilderIF builder = topicmap.getBuilder();
+    }
+    
     // ResourceType fullNameBreakUp(String sfn) {
     // ResourceType rt = new ResourceType();
     // String[] ss = new String[10];

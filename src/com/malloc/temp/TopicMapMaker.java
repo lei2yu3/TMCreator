@@ -2,6 +2,8 @@ package com.malloc.temp;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.tmapi.core.Scoped;
 import org.tmapi.core.Variant;
@@ -19,8 +21,8 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 
 public class TopicMapMaker {
-
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) throws IllegalAccessException {
 
         // 创建TM
         TopicMapStoreIF store = new InMemoryTopicMapStore();
@@ -85,10 +87,6 @@ public class TopicMapMaker {
                 aEmployment2, topicEmployee, topicTreeZ);
         AssociationRoleIF arEmployer2 = builder.makeAssociationRole(
                 aEmployment2, topicEmployer, topicOntopia);
-
-        // Object _ix = topicmap.getIndex("net.ontopia.topicmaps.core.index." +
-        // "ScopeIndexIF");
-        // ScopeIndexIF ix = ((ScopeIndexIF)_ix);
 
         // 添加Scope
         // TopicIF themeEmploys = builder.makeTopic();
@@ -158,35 +156,7 @@ public class TopicMapMaker {
         // AssociationRoleIF r3 = builder.makeAssociationRole(Ass2, art1, t1);
         // AssociationRoleIF r4 = builder.makeAssociationRole(Ass2, art2, t3);
 
-        
-        
 
-        String Video[] = { "rmvb", "avi", "mp4", "flv", "wmv" };
-
-        TopicIF tVideo = builder.makeTopic();
-        builder.makeTopicName(tVideo, "video");
-        
-        // 添加Topic
-        for(String ss : Video){
-            try {
-                TopicIF bbb = (TopicIF)Class.forName(ss).newInstance();
-                bbb = builder.makeTopic();
-                builder.makeTopicName(bbb, ss);
-            } catch (InstantiationException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-        
-        
-        
         // having created the topic map we are now ready to export it
         try {
             new XTMTopicMapWriter("1234.xtm").write(topicmap);
