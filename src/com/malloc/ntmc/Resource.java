@@ -140,9 +140,9 @@ public class Resource {
         return this.resourceTopic;
     }
 
-//    private void setResourceTopic(TopicIF rcTopic) {
-//        resourceTopic = rcTopic;
-//    }
+    // private void setResourceTopic(TopicIF rcTopic) {
+    // resourceTopic = rcTopic;
+    // }
 
     // get&set resourcePath
     // public String getResourcePath() {
