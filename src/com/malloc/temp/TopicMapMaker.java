@@ -21,7 +21,7 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 
 public class TopicMapMaker {
-    
+
     public static void main(String[] args) throws IllegalAccessException {
 
         // ´´½¨TM
@@ -155,7 +155,6 @@ public class TopicMapMaker {
         // AssociationIF Ass2 = builder.makeAssociation(at1);
         // AssociationRoleIF r3 = builder.makeAssociationRole(Ass2, art1, t1);
         // AssociationRoleIF r4 = builder.makeAssociationRole(Ass2, art2, t3);
-
 
         // having created the topic map we are now ready to export it
         try {
