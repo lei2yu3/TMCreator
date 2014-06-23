@@ -1,48 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <topic id="id18">
+  <topic id="id25">
     <baseName>
       <instanceOf>
         <topicRef xlink:href="#id3"></topicRef>
       </instanceOf>
-      <baseNameString>WebSite</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id3">
-    <subjectIdentity>
-      <subjectIndicatorRef xlink:href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
-    </subjectIdentity>
-  </topic>
-  <topic id="id1">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Developer</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id23">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Employee</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id11">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Cute</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id21">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Employment</baseNameString>
+      <baseNameString>Employer</baseNameString>
     </baseName>
   </topic>
   <topic id="id6">
@@ -53,20 +16,78 @@
       <baseNameString>Charming</baseNameString>
     </baseName>
   </topic>
+  <topic id="id23">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Employee</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id4">
+    <instanceOf>
+      <topicRef xlink:href="#id1"></topicRef>
+    </instanceOf>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Jill</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>I am charming!</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Developer</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id9">
+    <instanceOf>
+      <topicRef xlink:href="#id1"></topicRef>
+    </instanceOf>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Tom</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>I am CUTE!</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id11">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>Cute</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id18">
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <baseNameString>WebSite</baseNameString>
+    </baseName>
+  </topic>
   <topic id="id14">
     <baseName>
       <instanceOf>
         <topicRef xlink:href="#id3"></topicRef>
       </instanceOf>
       <baseNameString>Company</baseNameString>
-    </baseName>
-  </topic>
-  <topic id="id25">
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Employer</baseNameString>
     </baseName>
   </topic>
   <topic id="id16">
@@ -86,39 +107,18 @@
       <resourceData>http://g.cn</resourceData>
     </occurrence>
   </topic>
-  <topic id="id9">
-    <instanceOf>
-      <topicRef xlink:href="#id1"></topicRef>
-    </instanceOf>
+  <topic id="id21">
     <baseName>
       <instanceOf>
         <topicRef xlink:href="#id3"></topicRef>
       </instanceOf>
-      <baseNameString>TreeZ</baseNameString>
+      <baseNameString>Employment</baseNameString>
     </baseName>
-    <occurrence>
-      <instanceOf>
-        <topicRef xlink:href="#id11"></topicRef>
-      </instanceOf>
-      <resourceData>I am CUTE!</resourceData>
-    </occurrence>
   </topic>
-  <topic id="id4">
-    <instanceOf>
-      <topicRef xlink:href="#id1"></topicRef>
-    </instanceOf>
-    <baseName>
-      <instanceOf>
-        <topicRef xlink:href="#id3"></topicRef>
-      </instanceOf>
-      <baseNameString>Malloc</baseNameString>
-    </baseName>
-    <occurrence>
-      <instanceOf>
-        <topicRef xlink:href="#id6"></topicRef>
-      </instanceOf>
-      <resourceData>I am charming!</resourceData>
-    </occurrence>
+  <topic id="id3">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+    </subjectIdentity>
   </topic>
   <association>
     <instanceOf>
@@ -143,15 +143,15 @@
     </instanceOf>
     <member>
       <roleSpec>
-        <topicRef xlink:href="#id23"></topicRef>
-      </roleSpec>
-      <topicRef xlink:href="#id9"></topicRef>
-    </member>
-    <member>
-      <roleSpec>
         <topicRef xlink:href="#id25"></topicRef>
       </roleSpec>
       <topicRef xlink:href="#id16"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#id23"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#id9"></topicRef>
     </member>
   </association>
 </topicMap>
