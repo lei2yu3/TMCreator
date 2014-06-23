@@ -1,4 +1,4 @@
-package com.malloc.ntmc;
+package com.test.tmc;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,19 +18,13 @@ import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 public class Creator {
 
     // path of TMResource
-    // static final String TMResource = "X:\\EclipseWorkspace\\TMResrouce";
     static final String TMResource = "X:/EclipseWorkspace/TMResrouce";
     File dir = new File(TMResource);
 
     // ´æ´¢
     static ArrayList<Resource> resourceArray = new ArrayList<Resource>();
     static ArrayList<BaseResource> baseResourceArray = new ArrayList<BaseResource>();
-
-    // Store & Builder, for test
-    // static TopicMapStoreIF store = new InMemoryTopicMapStore();
-    // static TopicMapIF topicmap = store.getTopicMap();
-    // static TopicMapBuilderIF builder = topicmap.getBuilder();
-
+	
     //
     public static void reourceSearch(String sPath) {
 
@@ -63,9 +57,6 @@ public class Creator {
     }
 
     public static void main(String[] args) {
-        // , for test
-        // TopicIF topicResource = builder.makeTopic();
-        // builder.makeTopicName(topicResource, "Resource");
 
         long START = System.currentTimeMillis();
 
@@ -75,17 +66,7 @@ public class Creator {
         BaseResource br = new BaseResource();
         baseResourceArray = br.BaseResourceInit();
 
-        // , for test
-        // for(BaseResource bb:baseResourceArray){
-        // System.out.println("bb.getName = " + bb.getName().toString());
-        // }
-
         for (Resource r : resourceArray) {
-            // , for test
-            // r.resourcePrint();
-            // System.out.println(r.getResourceFileName());
-            // TopicIF topicResource = builder.makeTopic();
-            // builder.makeTopicName(topicResource, r.getResourceFileName());
 
             r.resourceTopic = br.brBuilder.makeTopic();
             br.brBuilder
@@ -94,13 +75,7 @@ public class Creator {
             for (BaseResource bb : baseResourceArray) {
                 if (r.getResourceSuffix().equals(bb.getName())) {
                     r.resourceTopic.addType(bb.baseResourceTopic);
-                    // System.out.println("bbbb");
-                } else {
-                    // System.out.println("aaaa");
                 }
-                // System.out.println(r.getResourceSuffix().equals(bb.getName()));
-                // System.out.println("r.Suffix = " + r.getResourceSuffix());
-                // System.out.println("bb.getName = " + bb.getName());
             }
         }
 
@@ -109,22 +84,6 @@ public class Creator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        QueryProcessorIF processor = new QueryProcessor(br.brTM);
-//        System.out.println(processor.toString());
-//        QueryResultIF result = null;
-//        try {
-//            result = processor
-//                    .execute("using aa for i\"http://www.exmple.com/\" "
-//                            + "instance-of($T, cpp)?");
-//            System.out.println(result.toString());
-//
-//        } catch (InvalidQueryException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } finally {
-//            result.close();
-//        }
 
         long END = System.currentTimeMillis();
         System.out.println("Time Cost: " + (END - START) + "ms (" + END + "-"

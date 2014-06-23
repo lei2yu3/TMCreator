@@ -1,4 +1,4 @@
-package com.malloc.ntmc;
+package com.test.tmc;
 
 import net.ontopia.topicmaps.core.TopicIF;
 
@@ -27,7 +27,7 @@ public class Resource {
     public Resource(String sFileName) {
         String[] ss = new String[5];
         ss = sFileName.split("-", 5);
-        
+
         setResourceName(ss[0]);
         setResourceCreator(ss[1]);
         setResourceDate(ss[2]);

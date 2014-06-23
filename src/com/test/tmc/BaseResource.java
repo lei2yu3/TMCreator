@@ -1,4 +1,4 @@
-package com.malloc.ntmc;
+package com.test.tmc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,10 +9,9 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.MergeUtils;
 
 public class BaseResource {
-    
+
     /**
      * All the resource Video视频，"rmvb", "avi", "mp4", "flv", "wmv"
      * Audio音频，"mp3", "wav", "ape", "ogg" Diagram图片，"jpg", "bmp", "png", "git"
@@ -30,7 +29,6 @@ public class BaseResource {
     public static final String brTypeArray[] = { "Video", "Audio", "Diagram",
             "Book", "Code", "Other" };
 
-    // public static final String brArray[][] = {
     public final String brArray[][] = { { "rmvb", "avi", "mp4", "flv", "wmv" },
             { "mp3", "wav", "ape", "ogg" }, { "jpg", "bmp", "png", "git" },
             { "txt", "pdf", "doc", "ppt" },
@@ -64,15 +62,11 @@ public class BaseResource {
         baseResourceName = brName;
     }
 
-//    static TopicMapStoreIF brStore = new InMemoryTopicMapStore();
-//    static TopicMapIF brTM = brStore.getTopicMap();
-//    static TopicMapBuilderIF brBuilder = brTM.getBuilder();
-     TopicMapStoreIF brStore = new InMemoryTopicMapStore();
-     TopicMapIF brTM = brStore.getTopicMap();
-     TopicMapBuilderIF brBuilder = brTM.getBuilder();
+    TopicMapStoreIF brStore = new InMemoryTopicMapStore();
+    TopicMapIF brTM = brStore.getTopicMap();
+    TopicMapBuilderIF brBuilder = brTM.getBuilder();
 
-    //public static ArrayList<BaseResource> BaseResourceInit() {
-     public ArrayList<BaseResource> BaseResourceInit() {
+    public ArrayList<BaseResource> BaseResourceInit() {
 
         // 使用brArrayList创建BaseResource ArrayList
         BaseResource br = new BaseResource("Resource");
@@ -97,69 +91,15 @@ public class BaseResource {
                 brArrayList.add(brx);
             }
         }
-        
+
         return brArrayList;
-
-        // 使用tArrayList创建BaseResource ArrayList, for test
-        // TopicIF tR = brBuilder.makeTopic();
-        // brBuilder.makeTopicName(tR, "Resource");
-        // tArrayList.add(tR);
-
-        // for (int i = 0; i < BaseResourceArray.length; i++) {
-        // for (int j = 0; j < BaseResourceArray[i].length; j++) {
-        //
-        // TopicIF tt = brBuilder.makeTopic();
-        // brBuilder.makeTopicName(tt, BaseResourceArray[i][j]);
-        // if (i == 0) {
-        // tt.addType(tR);
-        // } else {
-        // tt.addType(tArrayList.get(i));
-        // }
-        // tArrayList.add(tt);
-        // }
-        // }
     }
 
     public static void main(String[] args) {
-
-        // TopicIF tR = brBuilder.makeTopic();
-        // brBuilder.makeTopicName(tR, "Resource");
-        //
-        // // 使用两个数组brTypeArray & brArray创建TM
-        // for (String s : brTypeArray) {
-        // TopicIF tt = brBuilder.makeTopic();
-        // brBuilder.makeTopicName(tt, s);
-        // tt.addType(tR);
-        // tArrayList.add(tt);
-        // }
-        //
-        // for (int i = 0; i < brArray.length; i++) {
-        // for (int j = 0; j < brArray[i].length; j++) {
-        //
-        // TopicIF ttt = brBuilder.makeTopic();
-        // brBuilder.makeTopicName(ttt, brArray[i][j]);
-        // ttt.addType(tArrayList.get(i));
-        // tArrayList.add(ttt);
-        // }
-        // }
-        //
-        // for (TopicIF t : tArrayList) {
-        // System.out.println(t.getTopicNames());
-        // }
-
-        //BaseResourceInit();
-
-        // having created the topic map we are now ready to export it
-//        try {
-//            new XTMTopicMapWriter("newTM.xtm").write(brTM);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("I have a topic map with " + brTM.getTopics().size()
-//                + " TOPICS");
+	
+	
     }
 
-    
     // array, for test
     static final String VideoArray[] = { "rmvb", "avi", "mp4", "flv", "wmv" };
     static final String AudioArray[] = { "mp3", "wav", "ape", "ogg" };

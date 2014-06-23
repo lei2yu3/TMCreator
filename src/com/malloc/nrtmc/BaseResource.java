@@ -31,7 +31,7 @@ public class BaseResource {
             { "cpp", "h", "java", "cs", "py", "xml" },
             { "exe", "plist", "bat" } };
 
-    public static ArrayList<TopicIF> tArrayList = new ArrayList<TopicIF>();
+    //public static ArrayList<TopicIF> tArrayList = new ArrayList<TopicIF>();
     public static ArrayList<BaseResource> brArrayList = new ArrayList<BaseResource>();
 
     // base resource attribute
