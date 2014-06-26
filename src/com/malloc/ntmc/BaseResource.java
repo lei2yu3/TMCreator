@@ -9,7 +9,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
-import net.ontopia.topicmaps.utils.MergeUtils;
 
 public class BaseResource {
     
