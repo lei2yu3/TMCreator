@@ -73,7 +73,9 @@ public class tologTest {
 
         // String s =
         // "select $PERSON from born-in($PERSON : person, $CITY : place), located-in($CITY : containee, italy : container) order by $PERSON?";
-        String s = queryTopicNameByNameString("puccini");
+        //String s = queryTopicNameByNameString("puccini"); 
+        String s = "occurrence(puccini, $OCC)?";
+        @SuppressWarnings("unchecked")
         List list = wrapper.queryForMaps(s);
 
         System.out.println(list.size());

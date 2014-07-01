@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<repository>
+
+  <source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
+    <param name="propertyFile" value="db.semantic.properties"/>
+    <param name="id" value="qqq"/>
+    <param name="title" value="aaa"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+  </source>   
+	
+  <!--source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
+    <param name="propertyFile" value="db.postgresql.props"/>
+    <param name="id" value="postgresql"/>
+    <param name="title" value="PostgreSQL database"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+  </source-->
+  <!--source class="net.ontopia.topicmaps.impl.rdbms.RDBMSSingleTopicMapSource">
+    <param name="propertyFile" value="db.postgresql.props"/>
+    <param name="topicMapId" value="M1"/>
+    <param name="referenceId" value="mytopicmap"/>
+    <param name="title" value="My Topic Map"/>
+  </source-->
+  <!-- ${CWD} -->
+</repository>
