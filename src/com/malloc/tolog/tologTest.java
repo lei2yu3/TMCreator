@@ -9,18 +9,22 @@ import java.util.List;
 import java.util.Map;
 
 import ontopoly.model.QueryMapper;
-import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.basic.Association;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.impl.basic.Occurrence;
+import net.ontopia.topicmaps.impl.basic.Topic;
+import net.ontopia.topicmaps.impl.basic.TopicName;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
+import net.ontopia.topicmaps.query.core.QueryProcessorFactoryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryProcessor;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
@@ -61,30 +65,30 @@ public class tologTest {
         System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
         // query
-        // QueryProcessorIF processor = new QueryProcessor(tm);
-        // String s = "association($ASSOC)?";
-        // QueryResultIF result = processor.execute(s);
-        // System.out.println(result.getIndex("ASSOC"));
-        // ParsedQueryIF query = processor.parse("association($ASSOC)?");
-        // result.close();
+//         QueryProcessorIF processor = new QueryProcessor(tm);
+//         String s = "association($ASSOC)?";
+//         QueryResultIF result = processor.execute(s);
+//         System.out.println(result.getIndex("ASSOC"));
+//         ParsedQueryIF query = processor.parse("association($ASSOC)?");
+//         result.close();
 
         QueryWrapper wrapper = new QueryWrapper(tm);
         System.out.println(wrapper.queryForMaps("association($ASSOC)?").size());
 
-        // String s =
-        // "select $PERSON from born-in($PERSON : person, $CITY : place), located-in($CITY : containee, italy : container) order by $PERSON?";
+//         String s =
+//         "select $PERSON from born-in($PERSON : person, $CITY : place), located-in($CITY : containee, italy : container) order by $PERSON?";
         //String s = queryTopicNameByNameString("puccini"); 
-        String s = "occurrence(puccini, $OCC)?";
+        //String s = "occurrence(puccini, $OCC) order by $OCC?";
         @SuppressWarnings("unchecked")
-        List list = wrapper.queryForMaps(s);
+        List<Association> list = wrapper.queryForList("association($ASSOC)?");
 
-        System.out.println(list.size());
         for (int i = 0; i < list.size(); i++) {
 
-            System.out.println(list.get(i));
+            System.out.println( list.get(i).getType());
         }
+        System.out.println("size = " + list.size());
 
-        findTopicByName("aida", tm1);
+        //findTopicByName("aida", tm1);
 
         System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
@@ -97,9 +101,23 @@ public class tologTest {
         // Topic big = qm.queryForObject(query);
         // System.out.println(big.toString());
 
+        
+        
+        
         long END = System.currentTimeMillis();
         System.out.println("Time Cost: " + (END - START) + "ms (" + END + "-"
                 + "" + START + ")\n");
+        
+        
+        HashMap<String , Double> map = new HashMap<String , Double>(); 
+        map.put("语文" , 80.0); 
+        map.put("数学" , 89.0); 
+        map.put("英语" , 78.2); 
+        Object[] d = {};
+        //System.out.println(map.get("语文"));
+        
+        //System.out.println(d.length);
+        //{语文=80.0, 英语=78.2, 数学=89.0}
 
     }
 

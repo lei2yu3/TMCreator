@@ -14,6 +14,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -23,7 +24,7 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.utils.QueryWrapper;
 
 public class dbtest {
-    public static void main(String[] argv) {
+    public static void main(String[] argv) throws IOException {
 
         ArrayList<Resource> resourceList = new ArrayList<Resource>();
 /*
@@ -59,7 +60,7 @@ public class dbtest {
 // make topic map from rdbms test END
 // ============================================================
 */
-        //
+        // 连接数据库
         String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // 加载JDBC驱动
         String dbURL = "jdbc:sqlserver://localhost:1433; DatabaseName=TestTopicMap"; // 连接服务器和数据库test
         String userName = "sa"; // 用户名
@@ -98,7 +99,7 @@ public class dbtest {
                         result.getString("Name"), result.getString("Writer"),
                         result.getString("Company"), result.getString("Path"));
 
-                res.resourcePrint();
+                //res.resourcePrint();
                 resourceList.add(res);
 /*
 // ============================================================
@@ -174,16 +175,45 @@ public class dbtest {
                 se.printStackTrace();
             }
         }
-/*
-        // create TM by RDBMS
-        String propfile = "db.semantic.properties";
+
+        
+        
+        
+
+
+        /*
+        // 将指定TM导入到数据库中
+        TopicMapStoreIF store = new RDBMSTopicMapStore("db.testsqlserver.props");
+        // Get the new topic map object
+        TopicMapIF tm = store.getTopicMap();
+        
+        // Import the XTM document into the topic map object
+        TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmfile));
+        reader.importInto(tm);
+        System.err.println("Imported (id " + tm.getObjectId() + ").");
+        System.err.println("size = " + tm.getTopics().size() );
+
+        // Commit the transaction
+        store.commit();
+        // Close store (and database connection)
+        store.close();
+        */
+        
+        
+        
+        
+        
+        
+       
+        // create TM by RDBMS 读取数据库中的TM
+        String propfile = "db.testsqlserver.props";
 
         RDBMSTopicMapSource source = new RDBMSTopicMapSource();
         source.setPropertyFile(propfile);
         Iterator tms = source.getReferences().iterator();
 
         while (tms.hasNext()) {
-            System.out.println("hasNext");
+            //System.out.println("hasNext");
             TopicMapReferenceIF ref = null;
             TopicMapStoreIF store = null;
 
@@ -200,16 +230,19 @@ public class dbtest {
                 QueryWrapper wrapper = new QueryWrapper(tm);
                 // System.out.println(wrapper.queryForMaps("association($ASSOC)?").size());
 
-                String s = "occurrence(puccini, $occ) order by $occ?";
-                // String s = "topic-name(puccini,$T1)?";
+                //String s = "occurrence(puccini, $occ) order by $occ?";
+                String s = "topic-name(puccini,$T1)?";
+                //String s = "association($a)?";
+                //String s = "select $ASSOC, $T2 from role-player($ROLE1, aida), association-role($ASSOC, $ROLE1), association-role($ASSOC, $ROLE2), role-player($ROLE2, $T2), $T2 /= aida?";
+                
                 List list = wrapper.queryForMaps(s);
 
-                System.out.println(list.size());
                 for (int i = 0; i < list.size(); i++) {
 
                     System.out.println(list.get(i));
                 }
 
+                System.out.println(list.size());
                 System.out.println("Done.");
 
                 store.close();
@@ -220,6 +253,6 @@ public class dbtest {
                     ref.close();
             }
         }
-*/
+
     }
 }
