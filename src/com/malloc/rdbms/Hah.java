@@ -33,8 +33,9 @@ public class Hah {
         // =====================================================================
         // data base
         // =====================================================================
+
         String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // 加载JDBC驱动
-        String dbURL = "jdbc:sqlserver://localhost:1433; DatabaseName=TestTopicMap"; // 连接服务器和数据库test
+        String dbURL = "jdbc:sqlserver://localhost:1433; DatabaseName=xxx"; // 连接服务器和数据库test
         String userName = "sa"; // 用户名
         String userPwd = "123123"; // 密码
         Connection connection = null;
@@ -56,19 +57,19 @@ public class Hah {
         String companyString;// = null;
 
         // 创建InMemory TM
-        TopicMapStoreIF store = new InMemoryTopicMapStore();
-        TopicMapIF topicmap = store.getTopicMap();
+        TopicMapStoreIF inmemoryStore = new InMemoryTopicMapStore();
+        TopicMapIF topicmap = inmemoryStore.getTopicMap();
         TopicMapBuilderIF builder = topicmap.getBuilder();
 
         // temp topic
         TopicIF nameTopic;
-        TopicIF writerTopic = builder.makeTopic();
-        builder.makeTopicName(writerTopic, "tempwriter");
-        writerList.add(writerTopic);
+        TopicIF writerTopic = null;// = builder.makeTopic();
+        // builder.makeTopicName(writerTopic, "tempwriter");
+        // writerList.add(writerTopic);
 
-        TopicIF companyTopic = builder.makeTopic();
-        builder.makeTopicName(companyTopic, "tempcompany");
-        companyList.add(companyTopic);
+        TopicIF companyTopic = null;// = builder.makeTopic();
+        // builder.makeTopicName(companyTopic, "tempcompany");
+        // companyList.add(companyTopic);
 
         // 添加Writer-Comany关联
         TopicIF topicEmployment = builder.makeTopic();
@@ -80,11 +81,9 @@ public class Hah {
         TopicIF topicEmployer = builder.makeTopic();
         builder.makeTopicName(topicEmployer, "Employer");
 
-        AssociationIF associationWC = builder.makeAssociation(topicEmployment);
-
         // 添加Name-Writer资源实例
         TopicIF occurenceNW = builder.makeTopic();
-        builder.makeTopicName(occurenceNW, "0ccNW");
+        builder.makeTopicName(occurenceNW, "0cc-NW");
 
         //
         ArrayList<Resource> resourceList = new ArrayList<Resource>();
@@ -92,6 +91,7 @@ public class Hah {
         // =====================================================================
         // 读取数据库信息创建TM
         // =====================================================================
+
         try {
 
             // ----------------------------------------------------------
@@ -104,7 +104,8 @@ public class Hah {
             statement = connection.createStatement();
             // String query =
             // "SELECT TOP 13 [ID], [Name] ,[Writer] ,[Company] ,[Path] FROM [TestTopicMap].[dbo].[TopicMap]";
-            String query = "select * from TestTopicMap.dbo.TopicMap order by ID desc";
+            String query = "select * from TestTopicMap.dbo.TopicMap order by ID";
+            query = "select * from xxx.dbo.test order by ID";
             System.out.println(query);
             // statement.executeUpdate(query);
 
@@ -213,59 +214,87 @@ public class Hah {
 
             int i, j, k;
             for (i = 0; i < resourceList.size(); i++) {
-                nameString = resourceList.get(i).getName() == null ? "null"
-                        : resourceList.get(i).getName();
-                writerString = resourceList.get(i).getWriter() == null ? "null"
-                        : resourceList.get(i).getWriter();
-                companyString = resourceList.get(i).getCompany() == null ? "null"
-                        : resourceList.get(i).getCompany();
+                nameString = resourceList.get(i).getName();
+                writerString = resourceList.get(i).getWriter();
+                companyString = resourceList.get(i).getCompany();
+                // nameString = resourceList.get(i).getName() == null ? "null"
+                // : resourceList.get(i).getName();
+                // writerString = resourceList.get(i).getWriter() == null ?
+                // "null"
+                // : resourceList.get(i).getWriter();
+                // companyString = resourceList.get(i).getCompany() == null ?
+                // "null"
+                // : resourceList.get(i).getCompany();
 
                 // name
-//                nameTopic = builder.makeTopic();
-//                builder.makeTopicName(nameTopic, nameString);
-//                nameList.add(nameTopic);
+                // nameTopic = builder.makeTopic();
+                // builder.makeTopicName(nameTopic, nameString);
+                // nameList.add(nameTopic);
 
                 // writer
+                // if (writerList.size() == 0) {
+                // writerTopic = builder.makeTopic();
+                // builder.makeTopicName(writerTopic, writerString);
+                // writerList.add(writerTopic);
+                // }
+
                 for (j = 0; j < i; j++) {
-                    if (writerString.equals(resourceList.get(j).getWriter())) {
+                    // if (writerString.equals(resourceList.get(j).getWriter()))
+                    // {
+                    // writerTopic = writerList.get(writerList.size() - 1);
+                    if (writerString.equals(writerList.get(j).toString())) {
                         writerTopic = writerList.get(j);
                         break;
-                    } else {
                     }
                 }
+
                 if (i == j) {
                     writerTopic = builder.makeTopic();
-                    builder.makeTopicName(writerTopic, writerString);
+                    builder.makeTopicName(writerTopic, resourceList.get(j)
+                            .getWriter());
+
                     writerList.add(writerTopic);
-                    System.out.println("writerString = " + writerString);
                 }
 
                 // company
+                // if (companyList.size() == 0) {
+                // companyTopic = builder.makeTopic();
+                // builder.makeTopicName(companyTopic, resourceList.get(i)
+                // .getCompany());
+                // companyList.add(companyTopic);
+                // }
+
                 for (k = 0; k < i; k++) {
-                    if (companyString.equals(resourceList.get(k).getCompany())) {
+                    // if
+                    // (companyString.equals(resourceList.get(k).getCompany()))
+                    // {
+                    // companyTopic = companyList.get(companyList.size() - 1);
+                    if (companyString.equals(companyList.get(k).toString())) {
                         companyTopic = companyList.get(k);
                         break;
-                    } else {
                     }
                 }
+
                 if (i == k) {
                     companyTopic = builder.makeTopic();
-                    builder.makeTopicName(companyTopic, companyString);
+                    builder.makeTopicName(companyTopic, resourceList.get(k)
+                            .getCompany());
+
                     companyList.add(companyTopic);
-                    System.out.println("companyString = " + companyString);
                 }
 
                 // 创建occurrence
                 builder.makeOccurrence(writerTopic, occurenceNW, nameString);
 
                 // 创建assocation
+                AssociationIF associationWC = builder
+                        .makeAssociation(topicEmployment);
                 builder.makeAssociationRole(associationWC, topicEmployee,
                         writerTopic);
                 builder.makeAssociationRole(associationWC, topicEmployer,
                         companyTopic);
 
             }
-
             System.err.println("nameList.size() =  " + nameList.size());
             System.err.println("companyList.size() =  " + companyList.size());
             System.err.println("writerList.size() =  " + writerList.size());
@@ -277,45 +306,47 @@ public class Hah {
 
             // import XTM into database
             String xtmfile = "dbtest.xtm";
-            String propfile = "db.testsqlserver.props";
-            TopicMapStoreIF store1 = new RDBMSTopicMapStore(propfile);
+            String propfile = "db.xxx.props";
+            TopicMapStoreIF rdbmsSrore = new RDBMSTopicMapStore(propfile);
 
             // Get the new topic map object
-            TopicMapIF tm = store1.getTopicMap();
-            
+            TopicMapIF tm = rdbmsSrore.getTopicMap();
+
             // Import the XTM document into the topic map object
             TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmfile));
             reader.importInto(tm);
             System.err.println("Imported (id " + tm.getObjectId() + ").");
-            System.err.println("size = " + tm.getTopics().size() );
+            System.err.println("size = " + tm.getTopics().size());
 
-            
             // query
             QueryWrapper wrapper = new QueryWrapper(tm);
             String sss = "association($ASSOC)?";
             sss = "topic($topic)?";
-            sss = "topic-name(id75, $topic)?";
+            // sss = "topic-name(id75, $topic)?";
             System.out.println(wrapper.queryForMaps(sss).size());
             @SuppressWarnings("unchecked")
             List list = wrapper.queryForList(sss);
 
             for (int q = 0; q < list.size(); q++) {
 
-                System.out.println( list.get(q));
+                System.out.println(list.get(q));
             }
             System.out.println("size = " + list.size());
-            
 
-            store1.commit();
-            store1.close();
+            System.out.println("closeeeeeeeeeeeeeeeeeeee");
+
             // ----------------------------------------------------------
             // close
             // ----------------------------------------------------------
-            store.close();
+
+            inmemoryStore.close();
 
             result.close();
             statement.close();
             connection.close();
+
+            rdbmsSrore.commit();
+            rdbmsSrore.close();
 
         } catch (ClassNotFoundException e) {
             System.out.println("database loading error");
@@ -328,10 +359,5 @@ public class Hah {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public static void tmCreator() {
-
     }
 }
