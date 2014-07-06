@@ -26,7 +26,8 @@ public class RdbmsImport {
     System.err.println("Connecting...");
     //String propfile = argv[0];
     //String xtmfile = argv[1];
-    String propfile = "db.semantic.properties";
+    //String propfile = "db.semantic.properties";
+    String propfile = "db.testdb.props";
     String xtmfile = "io.xtm";
     
     // Create a new topic map store that will add a new topic map to
@@ -51,6 +52,6 @@ public class RdbmsImport {
     // Close store (and database connection)
     store.close();
 
-    System.err.println("Done.");    
-  }
+        System.err.println("Done.");
+    }
 }
