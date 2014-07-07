@@ -8,6 +8,12 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
+/**
+ * 
+ * 读取二维数组
+ * 
+ */
+
 public class BinaryArrayReader {
     static String[][] BArray = { { "0", "eee", "HHH" }, { "1", "aaa", "UUU" },
             { "2", "sss", "JJJ" }, { "3", "ddd", "MMM" },
@@ -147,92 +153,66 @@ class Item {
     }
 
 }
-//===============================================================
-ArrayList<TopicIF> nameList = new ArrayList<TopicIF>();
-ArrayList<TopicIF> writerList = new ArrayList<TopicIF>();
-ArrayList<TopicIF> companyList = new ArrayList<TopicIF>();
-
-// topic name string
-String nameString;// = null;
-String writerString;// = null;
-String companyString;// = null;
-
-// temp topic
-TopicIF nameTopic;
-TopicIF writerTopic = null;
-TopicIF companyTopic = null;
-
-// 添加Writer-Comany关联
-TopicIF topicEmployment = builder.makeTopic();
-builder.makeTopicName(topicEmployment, "Employment");
-
-TopicIF topicEmployee = builder.makeTopic();
-builder.makeTopicName(topicEmployee, "Employee");
-
-TopicIF topicEmployer = builder.makeTopic();
-builder.makeTopicName(topicEmployer, "Employer");
-
-// 添加Name-Writer资源实例
-TopicIF occurenceNW = builder.makeTopic();
-builder.makeTopicName(occurenceNW, "0cc-NW");
-
-//
-ArrayList<Resource> resourceList = new ArrayList<Resource>();
-
-
-int i, j, k;
-for (i = 0; i < resourceList.size(); i++) {
-    nameString = resourceList.get(i).getName();
-    writerString = resourceList.get(i).getWriter();
-    companyString = resourceList.get(i).getCompany();
-
-    for (j = 0; j < i; j++) {
-        // if (writerString.equals(resourceList.get(j).getWriter()))
-        // {
-        // writerTopic = writerList.get(writerList.size() - 1);
-        if (writerString.equals(writerList.get(j).toString())) {
-            writerTopic = writerList.get(j);
-            break;
-        }
-    }
-
-    if (i == j) {
-        writerTopic = builder.makeTopic();
-        builder.makeTopicName(writerTopic, resourceList.get(j)
-                .getWriter());
-
-        writerList.add(writerTopic);
-    }
-
-    // company
-
-    for (k = 0; k < i; k++) {
-        // if
-        // (companyString.equals(resourceList.get(k).getCompany()))
-        // {
-        // companyTopic = companyList.get(companyList.size() - 1);
-        if (companyString.equals(companyList.get(k).toString())) {
-            companyTopic = companyList.get(k);
-            break;
-        }
-    }
-
-    if (i == k) {
-        companyTopic = builder.makeTopic();
-        builder.makeTopicName(companyTopic, resourceList.get(k)
-                .getCompany());
-
-        companyList.add(companyTopic);
-    }
-
-    // 创建occurrence
-    builder.makeOccurrence(writerTopic, occurenceNW, nameString);
-
-    // 创建assocation
-    AssociationIF associationWC = builder
-            .makeAssociation(topicEmployment);
-    builder.makeAssociationRole(associationWC, topicEmployee,
-            writerTopic);
-    builder.makeAssociationRole(associationWC, topicEmployer,
-            companyTopic);
-*/
+// ===============================================================
+/*
+ * ArrayList<TopicIF> nameList = new ArrayList<TopicIF>(); ArrayList<TopicIF>
+ * writerList = new ArrayList<TopicIF>(); ArrayList<TopicIF> companyList = new
+ * ArrayList<TopicIF>();
+ * 
+ * // topic name string String nameString;// = null; String writerString;// =
+ * null; String companyString;// = null;
+ * 
+ * // temp topic TopicIF nameTopic; TopicIF writerTopic = null; TopicIF
+ * companyTopic = null;
+ * 
+ * // 添加Writer-Comany关联 TopicIF topicEmployment = builder.makeTopic();
+ * builder.makeTopicName(topicEmployment, "Employment");
+ * 
+ * TopicIF topicEmployee = builder.makeTopic();
+ * builder.makeTopicName(topicEmployee, "Employee");
+ * 
+ * TopicIF topicEmployer = builder.makeTopic();
+ * builder.makeTopicName(topicEmployer, "Employer");
+ * 
+ * // 添加Name-Writer资源实例 TopicIF occurenceNW = builder.makeTopic();
+ * builder.makeTopicName(occurenceNW, "0cc-NW");
+ * 
+ * // ArrayList<Resource> resourceList = new ArrayList<Resource>();
+ * 
+ * 
+ * int i, j, k; for (i = 0; i < resourceList.size(); i++) { nameString =
+ * resourceList.get(i).getName(); writerString =
+ * resourceList.get(i).getWriter(); companyString =
+ * resourceList.get(i).getCompany();
+ * 
+ * for (j = 0; j < i; j++) { // if
+ * (writerString.equals(resourceList.get(j).getWriter())) // { // writerTopic =
+ * writerList.get(writerList.size() - 1); if
+ * (writerString.equals(writerList.get(j).toString())) { writerTopic =
+ * writerList.get(j); break; } }
+ * 
+ * if (i == j) { writerTopic = builder.makeTopic();
+ * builder.makeTopicName(writerTopic, resourceList.get(j) .getWriter());
+ * 
+ * writerList.add(writerTopic); }
+ * 
+ * // company
+ * 
+ * for (k = 0; k < i; k++) { // if //
+ * (companyString.equals(resourceList.get(k).getCompany())) // { // companyTopic
+ * = companyList.get(companyList.size() - 1); if
+ * (companyString.equals(companyList.get(k).toString())) { companyTopic =
+ * companyList.get(k); break; } }
+ * 
+ * if (i == k) { companyTopic = builder.makeTopic();
+ * builder.makeTopicName(companyTopic, resourceList.get(k) .getCompany());
+ * 
+ * companyList.add(companyTopic); }
+ * 
+ * // 创建occurrence builder.makeOccurrence(writerTopic, occurenceNW, nameString);
+ * 
+ * // 创建assocation AssociationIF associationWC = builder
+ * .makeAssociation(topicEmployment); builder.makeAssociationRole(associationWC,
+ * topicEmployee, writerTopic); builder.makeAssociationRole(associationWC,
+ * topicEmployer, companyTopic);
+ */

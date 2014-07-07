@@ -22,6 +22,11 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.utils.QueryWrapper;
 
+/**
+ * 
+ * 读取创建数据库
+ *
+ */
 public class dbtest {
     public static void main(String[] argv) throws IOException {
 

@@ -26,19 +26,19 @@ public class RdbmsList {
         // java RdbmsList /tmp/myprops.xml
 
         System.out.println("Connecting...");
-        // String propfile = argv[0];
-        // String propfile = "tm-sources.xml";
-        String propfile = "db.tesedb.props";
-
+        //String propfile = argv[0];
+		//String propfile = "tm-sources.xml";
+		String propfile = "db.semantic.properties";
+		
         // create a source which can enumerate the topic maps
         RDBMSTopicMapSource source = new RDBMSTopicMapSource();
         source.setPropertyFile(propfile);
         Iterator tms = source.getReferences().iterator();
-
-        System.out.println(tms.toString());
-
-        while (tms.hasNext()) {
-            System.out.println("hasNext");
+		
+		System.out.println(tms.toString());
+        
+		while (tms.hasNext()) {
+		System.out.println("hasNext");
             TopicMapReferenceIF ref = null;
             TopicMapStoreIF store = null;
 
@@ -51,22 +51,26 @@ public class RdbmsList {
                 System.out.println("  Topics: " + tm.getTopics().size());
                 System.out.println("  Associations: "
                         + tm.getAssociations().size());
+						
+				
+		QueryWrapper wrapper = new QueryWrapper(tm);
+        //System.out.println(wrapper.queryForMaps("association($ASSOC)?").size());
 
-                QueryWrapper wrapper = new QueryWrapper(tm);
-                // System.out.println(wrapper.queryForMaps("association($ASSOC)?").size());
+        String s = "occurrence(puccini, $occ) order by $occ?";
+        //String s = "topic-name(puccini,$T1)?";
+        List list = wrapper.queryForMaps(s);
 
-                String s = "occurrence(puccini, $occ) order by $occ?";
-                // String s = "topic-name(puccini,$T1)?";
-                List list = wrapper.queryForMaps(s);
+        System.out.println(list.size());
+        for (int i = 0; i < list.size(); i++) {
 
-                System.out.println(list.size());
-                for (int i = 0; i < list.size(); i++) {
-
-                    System.out.println(list.get(i));
-                }
-
-                System.out.println("Done.");
-
+            System.out.println(list.get(i));
+        }
+		
+        System.out.println("Done.");		
+						
+						
+						
+						
                 store.close();
             } finally {
                 if (store != null)
@@ -75,5 +79,7 @@ public class RdbmsList {
                     ref.close();
             }
         }
+
+
     }
 }
