@@ -180,35 +180,33 @@ public class DBBuilder {
             // System.err.println("size = " + tm.getTopics().size());
 
             // writer tm to XTM
-            // new XTMTopicMapWriter("dbtest.xtm").write(topicmap);
-            /*
-             * // import XTM into database 
-             * String xtmfile = "dbtest.xtm"; 
-             * String propfile = "db.xxx.props"; 
-             * TopicMapStoreIF rdbmsSrore = new RDBMSTopicMapStore(propfile);
-             * 
-             * // Get the new topic map object 
-             * TopicMapIF tm = rdbmsSrore.getTopicMap();
-             * 
-             * // Import the XTM document into the topic map object
-             * TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmfile)); 
-             * reader.importInto(tm);
-             * System.err.println("Imported (id " + tm.getObjectId() + ").");
-             * System.err.println("size = " + tm.getTopics().size());
-             * 
-             * System.out.println("=========================");
-             */
-            
-            START = System.currentTimeMillis();
+            new XTMTopicMapWriter("dbtest.xtm").write(tm);
+
+            // import XTM into database
+            String xtmfile = "dbtest.xtm";
+            // String propfile = "db.xxx.props";
+            // TopicMapStoreIF rdbmsSrore = new RDBMSTopicMapStore(propfile);
+            // TopicMapIF tm = rdbmsSrore.getTopicMap();
+
+            // Import the XTM document into the topic map object
+            TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmfile));
+            reader.importInto(tm);
+            System.err.println("Imported (id " + tm.getObjectId() + ").");
+            System.err.println("size = " + tm.getTopics().size());
+
+            System.out.println("=========================");
+
             // query
             QueryWrapper wrapper = new QueryWrapper(tm);
             // QueryWrapper wrapper = new QueryWrapper(topicmap);
-            
+
             String sss = "association($ASSOC)?";
             sss = "topic($topic)?";
             // sss = "topic-name(id75, $topic)?";
             // System.out.println(wrapper.queryForMaps(sss).size());
-            
+
+            START = System.currentTimeMillis();
+
             @SuppressWarnings("unchecked")
             List list = wrapper.queryForList(sss);
 

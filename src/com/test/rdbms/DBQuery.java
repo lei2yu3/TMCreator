@@ -36,17 +36,17 @@ public class DBQuery {
             System.err.println("size = " + tm.getTopics().size());
 
             System.out.println("=============================");
-            START = System.currentTimeMillis();
             // query
             QueryWrapper wrapper = new QueryWrapper(tm);
             String sss = "association($ASSOC)?";
             // sss = "topic($topic)?";
-            // sss = "topic-name(id58660, $topic)?";
-            // sss = "occurrence($r, $OCC)?";
-
+            // sss = "topic-name(ÈýÆÕ, $topic)?";
+            sss = "occurrence($r, $OCC)?";
             System.out.println(sss);
 
             System.out.println(wrapper.queryForMaps(sss).size());
+
+            START = System.currentTimeMillis();
             @SuppressWarnings("unchecked")
             List list = wrapper.queryForList(sss);
 
