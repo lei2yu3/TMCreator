@@ -54,7 +54,7 @@ public class QueryMe {
             // query
             QueryWrapper wrapper = new QueryWrapper(tm);
 
-            MODE = 9;
+            MODE = 8;
 
             switch (MODE) {
             case VALUE: 
@@ -87,7 +87,8 @@ public class QueryMe {
                 break;
             case OCCURRENCE_specified: 
                 // 8 
-                ss = "select $s,$occ from occurrence($topic, $occ), value-like($occ, \"川西致密气藏水平井控水压裂技术研究及应用.pdf\"), topic-name($topic, $name), value($name, $s)?";
+                ss = "select $s,$occ from occurrence($topic, $occ), value-like($occ, \"川西致密气藏水平井控水压裂技术研究\"), topic-name($topic, $name), value($name, $s)?";
+                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str   occurrence($topic, $occ), value($occ, $SI), str:contains($SI, \"川西致密\"), topic-name($topic, $name), value($name, $s)?";
                 break;
             case ASSOCIATION_specified: 
                 // 9 
@@ -116,8 +117,8 @@ public class QueryMe {
 
             START = System.currentTimeMillis();
             @SuppressWarnings("unchecked")
-            // List list = wrapper.queryForMaps(sss);
-             List list = wrapper.queryForList(sss);
+             List list = wrapper.queryForMaps(sss);
+            // List list = wrapper.queryForList(sss);
 
             END = System.currentTimeMillis();
             System.out.println("Query Time Cost: " + (END - START)

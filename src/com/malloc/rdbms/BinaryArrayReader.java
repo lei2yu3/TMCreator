@@ -109,8 +109,8 @@ class Item {
     }
 
     //
-    public Item(String fID, String sName, String sWriter) {
-        setID(fID);
+    public Item(String sID, String sName, String sWriter) {
+        setID(sID);
         setName(sName);
         setWriter(sWriter);
     }
