@@ -52,17 +52,17 @@ class Cell {
     // }
 }
 
-// ID 包含Writer索引
-class ID extends Cell {
+// Book 包含Writer索引
+class Book extends Cell {
 
     private int WriterIndex;
 
-    public ID() {
+    public Book() {
         super();
         WriterIndex = 0;
     }
 
-    public ID(String ss, int ii) {
+    public Book(String ss, int ii) {
         super(ss);
         setWriterIndex(ii);
     }
@@ -77,31 +77,31 @@ class ID extends Cell {
     }
 }
 
-// Writer 包含ID和Company索引
+// Writer 包含Book和Company索引
 class Writer extends Cell {
 
-    private int IDIndex;
+    private int BookIndex;
     private int CompanyIndex;
 
     public Writer() {
         super();
-        IDIndex = 0;
+        BookIndex = 0;
         CompanyIndex = 0;
     }
 
     public Writer(String ss, int ii, int jj) {
         super(ss);
-        setIDIndex(ii);
+        setBookIndex(ii);
         setCompanyIndex(jj);
     }
 
-    // get&set IDIndex
-    public int getIDIndex() {
-        return IDIndex;
+    // get&set BookIndex
+    public int getBookIndex() {
+        return BookIndex;
     }
 
-    private void setIDIndex(int i) {
-        IDIndex = i;
+    private void setBookIndex(int i) {
+        BookIndex = i;
     }
 
     // get&set CompanyIndex
@@ -139,33 +139,33 @@ class Company extends Cell {
     }
 }
 
-// 每行包含三个字段，ID，Writer，Company
+// 每行包含三个字段，Book，Writer，Company
 class Row {
 
-    private ID rowID;// = new ID();
+    private Book rowBook;// = new Book();
     private Writer rowWriter;// = new Writer();
     private Company rowCompany;// = new Company();
 
     public Row() {
-        rowID = new ID();
+        rowBook = new Book();
         rowWriter = new Writer();
         rowCompany = new Company();
     }
 
     //
-    public Row(ID i, Writer w, Company c) {
-        rowID = new ID(i.getString(), i.getWriterIndex());
-        rowWriter = new Writer(w.getString(), w.getIDIndex(),
+    public Row(Book i, Writer w, Company c) {
+        rowBook = new Book(i.getString(), i.getWriterIndex());
+        rowWriter = new Writer(w.getString(), w.getBookIndex(),
                 w.getCompanyIndex());
         rowCompany = new Company(c.getString(), c.getWriterIndex());
     }
 
-    public ID getID() {
-        return rowID;
+    public Book getBook() {
+        return rowBook;
     }
 
-    // private void setID(ID ii) {
-    // rowID = ii;
+    // private void setBook(Book ii) {
+    // rowBook = ii;
     // }
 
     public Writer getWriter() {
@@ -187,8 +187,8 @@ class Row {
 
 public class Hehe {
 
-    // ID <-- Writer <--> Company
-    // ID是Writer的Occurrence，Writer和Company是一对Association
+    // Book <-- Writer <--> Company
+    // Book是Writer的Occurrence，Writer和Company是一对Association
     // static String[][] HahaArray = { { "aaa", "MMM", "xx1" },
     // { "bbb", "MMM", "yy1" }, { "aaa", "NNN", "xx1" },
     // { "ccc", "NNN", "xx1" }, { "bbb", "OOO", "yy1" },
@@ -204,24 +204,24 @@ public class Hehe {
             { "13", "www", "MMM" }, { "14", "eee", "MMM" },
             { "15", "sss", "MMM" } };
 
-    // static List<ID> IDList = new ArrayList<ID>();
+    // static List<Book> BookList = new ArrayList<Book>();
     // static List<Writer> WriterList = new ArrayList<Writer>();
     // static List<Company> CompanyList = new ArrayList<Company>();
 
     public static void main(String[] args) throws IOException {
 
         //
-        ArrayList<String> IDSList = new ArrayList<String>();
+        ArrayList<String> BookSList = new ArrayList<String>();
         ArrayList<String> WriterSList = new ArrayList<String>();
         ArrayList<String> CompanySList = new ArrayList<String>();
 
         ArrayList<Row> RowList = new ArrayList<Row>();
 
-        int tempIDIndex = 0;
+        int tempBookIndex = 0;
         int tempWriterIndex = 0;
         int tempCompanyIndex = 0;
 
-        String tempIDString = null;
+        String tempBookString = null;
         String tempWriterString = null;
         String tempCompanyString = null;
 
@@ -233,64 +233,64 @@ public class Hehe {
 
         // 添加Writer-Comany关联
         TopicIF topicEmployment = builder.makeTopic();
-        builder.makeTopicName(topicEmployment, "Employment");
+        builder.makeTopicBook(topicEmployment, "Employment");
 
         TopicIF topicEmployee = builder.makeTopic();
-        builder.makeTopicName(topicEmployee, "Employee");
+        builder.makeTopicBook(topicEmployee, "Employee");
 
         TopicIF topicEmployer = builder.makeTopic();
-        builder.makeTopicName(topicEmployer, "Employer");
+        builder.makeTopicBook(topicEmployer, "Employer");
 
-        // 添加Name-Writer资源实例
+        // 添加Book-Writer资源实例
         TopicIF occurenceNW = builder.makeTopic();
-        builder.makeTopicName(occurenceNW, "0ccNW");
+        builder.makeTopicBook(occurenceNW, "0ccNW");
         */
 
         /*
-        ID ri = new ID("idxxx", 11);
+        Book ri = new Book("idxxx", 11);
         Writer rw = new Writer("writerxxx", 22, 33);
         Company rc = new Company("companyxxx", 44);
         Row rr = new Row(ri, rw, rc);
 
-        System.out.println(rr.getID().getString() + " | getWriterString: "
-                + rr.getID().getWriterIndex()); //
-        System.out.println(rr.getID().getWriterIndex());
+        System.out.println(rr.getBook().getString() + " | getWriterString: "
+                + rr.getBook().getWriterIndex()); //
+        System.out.println(rr.getBook().getWriterIndex());
 
         System.out.println("============================================");
 
-        System.out.println(rr.getWriter().getString() + " | getIDIndex: "
-                + rr.getWriter().getIDIndex() + " | getCompanyIndex: "
+        System.out.println(rr.getWriter().getString() + " | getBookIndex: "
+                + rr.getWriter().getBookIndex() + " | getCompanyIndex: "
                 + rr.getWriter().getCompanyIndex()); //
-        System.out.println(rr.getWriter().getIDIndex()); //
+        System.out.println(rr.getWriter().getBookIndex()); //
         System.out.println(rr.getWriter().getCompanyIndex()); 
 
         System.out.println("============================================");
 
-        System.out.println(rr.getCompany().getString() + " | getIDIndex: "
+        System.out.println(rr.getCompany().getString() + " | getBookIndex: "
                 + rr.getCompany().getWriterIndex()); //
         System.out.println(rr.getCompany().getWriterIndex());
         System.out.println("############################################");
 
-        ID rii = new ID();
+        Book rii = new Book();
         Writer rww = new Writer();
         Company rcc = new Company();
         Row rrr = new Row(rii, rww, rcc);
 
-        System.out.println(rrr.getID().getString() + " | getWriterIndex: "
-                + rrr.getID().getWriterIndex()); //
-        System.out.println(rrr.getID().getWriterIndex());
+        System.out.println(rrr.getBook().getString() + " | getWriterIndex: "
+                + rrr.getBook().getWriterIndex()); //
+        System.out.println(rrr.getBook().getWriterIndex());
 
         System.out.println("============================================");
 
-        System.out.println(rrr.getWriter().getString() + " | getIDIndex: "
-                + rrr.getWriter().getIDIndex() + " | getCompanyIndex: "
+        System.out.println(rrr.getWriter().getString() + " | getBookIndex: "
+                + rrr.getWriter().getBookIndex() + " | getCompanyIndex: "
                 + rrr.getWriter().getCompanyIndex()); //
-        System.out.println(rrr.getWriter().getIDIndex()); //
+        System.out.println(rrr.getWriter().getBookIndex()); //
         System.out.println(rrr.getWriter().getCompanyIndex());
 
         System.out.println("============================================");
 
-        System.out.println(rrr.getCompany().getString() + " | getIDIndex: "
+        System.out.println(rrr.getCompany().getString() + " | getBookIndex: "
                 + rrr.getCompany().getWriterIndex()); //
         System.out.println(rrr.getCompany().getWriterIndex());
 
@@ -304,41 +304,48 @@ public class Hehe {
 
             // System.out.println(HahaArray[i][1]);
 
-            if (!IDSList.contains(HahaArray[i][0])) {
-                IDSList.add(HahaArray[i][0]);
+            tempBookString = HahaArray[i][0];
+            tempWriterString = HahaArray[i][1];
+            tempCompanyString = HahaArray[i][2];
+
+            if (!BookSList.contains(tempBookString)) {
+                BookSList.add(tempBookString);
             }
 
-            if (!WriterSList.contains(HahaArray[i][1])) {
-                WriterSList.add(HahaArray[i][1]);
+            if (!WriterSList.contains(tempWriterString)) {
+                WriterSList.add(tempWriterString);
             }
 
-            if (!CompanySList.contains(HahaArray[i][2])) {
-                CompanySList.add(HahaArray[i][2]);
+            if (!CompanySList.contains(tempCompanyString)) {
+                CompanySList.add(tempCompanyString);
             }
 
-            System.out.println(IDSList);
+            System.out.println(BookSList);
             System.out.println(WriterSList);
             System.out.println(CompanySList);
 
-            System.out.println(IDSList.indexOf(HahaArray[i][0]));
-            System.out.println(WriterSList.indexOf(HahaArray[i][1]));
-            System.out.println(CompanySList.indexOf(HahaArray[i][2]));
+            System.out.println(BookSList.indexOf(tempBookString));
+            // System.out.println(BookSList.lastIndexOf(tempBookString));
+            System.out.println(WriterSList.indexOf(tempWriterString));
+            // System.out.println(WriterSList.lastIndexOf(tempWriterString));
+            System.out.println(CompanySList.indexOf(tempCompanyString));
+            // System.out.println(CompanySList.lastIndexOf(tempCompanyString));
 
-            tempIDIndex = IDSList.indexOf(HahaArray[i][0]);
-            tempWriterIndex = WriterSList.indexOf(HahaArray[i][1]);
-            tempCompanyIndex = CompanySList.indexOf(HahaArray[i][2]);
+            tempBookIndex = BookSList.indexOf(tempBookString);
+            tempWriterIndex = WriterSList.indexOf(tempWriterString);
+            tempCompanyIndex = CompanySList.indexOf(tempCompanyString);
 
-            ID haID = new ID(HahaArray[i][0], tempWriterIndex);
-            Writer haWriter = new Writer(HahaArray[i][1], tempIDIndex,
+            Book haBook = new Book(tempBookString, tempWriterIndex);
+            Writer haWriter = new Writer(tempWriterString, tempBookIndex,
                     tempCompanyIndex);
-            Company haCompany = new Company(HahaArray[i][2], tempWriterIndex);
-            Row haRow = new Row(haID, haWriter, haCompany);
+            Company haCompany = new Company(tempCompanyString, tempWriterIndex);
+            Row haRow = new Row(haBook, haWriter, haCompany);
             RowList.add(haRow);
             System.out.println(",.,.,.,.,.,.,.,");
 
-            // RowList.add(new Row(new ID(HahaArray[i][0], WriterSList
+            // RowList.add(new Row(new Book(HahaArray[i][0], WriterSList
             // .indexOf(HahaArray[i][1])), new Writer(HahaArray[i][1],
-            // IDSList.indexOf(HahaArray[i][0]), CompanySList
+            // BookSList.indexOf(HahaArray[i][0]), CompanySList
             // .indexOf(HahaArray[i][2])), new Company(
             // HahaArray[i][2], WriterSList.indexOf(HahaArray[i][1]))));
             // }
@@ -346,35 +353,34 @@ public class Hehe {
 
         for (Row rxx : RowList) {
 
-            System.out.println("ID: " + rxx.getID().getString()
-                    + " | getWriterIndex: " + rxx.getID().getWriterIndex());
+            System.out.println("Book: " + rxx.getBook().getString()
+                    + " | getWriterIndex: " + rxx.getBook().getWriterIndex());
 
             System.out.println("Writer: " + rxx.getWriter().getString()
-                    + " | getIDIndex: " + rxx.getWriter().getIDIndex()
+                    + " | getBookIndex: " + rxx.getWriter().getBookIndex()
                     + " | getCompanyIndex: "
                     + rxx.getWriter().getCompanyIndex());
 
             System.out.println("Company: " + rxx.getCompany().getString()
-                    + " | getIDIndex: " + rxx.getCompany().getWriterIndex());
+                    + " | getBookIndex: " + rxx.getCompany().getWriterIndex());
             System.out.println("============================================");
 
-            tempIDString = rxx.getID().getString();
+            tempBookString = rxx.getBook().getString();
             tempWriterString = rxx.getWriter().getString();
             tempCompanyString = rxx.getCompany().getString();
 
-
             /*
             TopicIF idTopic = builder.makeTopic();
-            builder.makeTopicName(idTopic, rxx.getID().getString());
+            builder.makeTopicBook(idTopic, rxx.getBook().getString());
             
             TopicIF writerTopic = builder.makeTopic();
-            builder.makeTopicName(writerTopic, rxx.getWriter().getString());
+            builder.makeTopicBook(writerTopic, rxx.getWriter().getString());
             
             TopicIF companyTopic = builder.makeTopic();
-            builder.makeTopicName(companyTopic, rxx.getCompany().getString());
+            builder.makeTopicBook(companyTopic, rxx.getCompany().getString());
 
             // 创建occurrence
-            builder.makeOccurrence(writerTopic, occurenceNW, rxx.getID().getString());
+            builder.makeOccurrence(writerTopic, occurenceNW, rxx.getBook().getString());
 
             // 创建assocation
             AssociationIF associationWC = builder
@@ -386,7 +392,7 @@ public class Hehe {
             */
         }
 
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx!");
 
         /*
         // 删除数组中的重复项1
@@ -427,118 +433,3 @@ public class Hehe {
         //
     }
 }
-
-
-/*
-
-搜索目标的下一级相关
-
-
-
-如果搜索目标是为occurrence，输出包含相关字符的occurrence以及包含该实例的topic
-
-
-
-
-import "http://psi.ontopia.net/tolog/string/" as str
-
-select $Occurrence, $OccurrenceType, $OccurrenceValue, $Topic, $TopicName from
-
-occurrence($Topic, $Occurrence), 
-type($Occurrence,$OccurrenceType),
-{resource($Occurrence,$OccurrenceValue) | 
-value($Occurrence,$OccurrenceValue)},
-str:contains($OccurrenceValue, "Puccini"),
-
-topic-name($Topic, $name), 
-value($name, $TopicName)
-
-order by $Occurrence?
-
-如果搜索目标是为association，输出该关联的关联角色
-
-
-
-
-
-
-
-
-import "http://psi.ontopia.net/tolog/string/" as str
-
-select $RoleTopic1, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from
-
-association($Association),
-type($Association, $AssociationType),
-topic-name($AssociationType, $AssociationName),
-value($AssociationName, $AssociationString), 
-str:contains($AssociationString, "Completed by"),
-
-role-player($role1, $RoleTopic1),
-association-role($Association, $role1),
-association-role($Association, $role2),
-role-player($role2, $RoleTopic2),
-$RoleTopic1 /= $RoleTopic2,
-
-type($role1, $RoleType1),
-type($role2, $RoleType2)
-
-order by $Association?
-
-如果搜索目标是为topic，输出该主题的关联类型以及实例，相关联的主题
-
-
-
-相关的关联和主题
-
-import "http://psi.ontopia.net/tolog/string/" as str
-select $Topic, $TopicName, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from
-
-topic-name($Topic, $name), 
-value($name, $TopicName),
-str:contains($TopicName, "Puccini"),
-
-role-player($role1, $Topic),
-association-role($Association, $role1),
-association-role($Association, $role2),
-role-player($role2, $RoleTopic2),
-$Topic /= $RoleTopic2,
-
-type($role1, $RoleType1),
-type($role2, $RoleType2),
-type($Association, $AssociationType)
-
-order by $Topic?
-
-
-
-
-包含的实例
-
-import "http://psi.ontopia.net/tolog/string/" as str
-
-select $Topic, $TopicName, $Occurrence, $OccurrenceType, $OccurrenceValue from
-
-topic-name($Topic, $name), 
-value($name, $TopicName),
-str:contains($TopicName, "Puccini"),
-
-occurrence($Topic, $Occurrence), 
-type($Occurrence,$OccurrenceType),
-{resource($Occurrence,$OccurrenceValue) | 
-value($Occurrence,$OccurrenceValue)}
-
-
-order by $Topic?
-
-
-
-
-
-
-如果去除select处的$TopicName，则结果将不显示重名的topicname
-
-
- 
-
- */

@@ -25,6 +25,11 @@ public class QueryMe {
     final static int OCCURRENCE_specified = 8;
     final static int ASSOCIATION_specified = 9;
     
+    final static int OccurrenceHehe = 11;
+    final static int AssociationHehe = 12;
+    final static int TopicAssociationHehe = 13;
+    final static int TopicOccurrenceHehe = 14;
+    
 //    enum Mode {
 //        VALUE, VALUE_LIKE, VALUE_STRING, ASSOCIATION, OCCURRENCE, TOPIC
 //    };
@@ -95,6 +100,23 @@ public class QueryMe {
                 ss = "select $s from association($ASSOC), type($ASSOC, $TYPE), topic-name($TYPE,$n), value($n,$s)?";
                 ss = "select $n from association($ASSOC), type($ASSOC, $TYPE), topic-name($TYPE,$n), value($n, \"Employment\")?";
                 break;
+
+            case OccurrenceHehe:
+                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $Occurrence, $OccurrenceType, $OccurrenceValue, $Topic, $TopicName from occurrence($Topic, $Occurrence), type($Occurrence,$OccurrenceType), {resource($Occurrence,$OccurrenceValue) | value($Occurrence,$OccurrenceValue)}, str:contains($OccurrenceValue, \"Puccini\"), topic-name($Topic, $name), value($name, $TopicName) order by $Occurrence?";
+                break;
+
+            case AssociationHehe:
+                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $RoleTopic1, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from association($Association), type($Association, $AssociationType), topic-name($AssociationType, $AssociationName), value($AssociationName, $AssociationString), str:contains($AssociationString, \"Completed by\"), role-player($role1, $RoleTopic1),association-role($Association, $role1), association-role($Association, $role2), role-player($role2, $RoleTopic2), $RoleTopic1 /= $RoleTopic2, type($role1, $RoleType1), type($role2, $RoleType2) order by $Association?";
+                break;
+                
+            case TopicAssociationHehe:
+                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $Topic, $TopicName, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from topic-name($Topic, $name), value($name, $TopicName), str:contains($TopicName, \"Puccini\"), role-player($role1, $Topic), association-role($Association, $role1), association-role($Association, $role2), role-player($role2, $RoleTopic2), $Topic /= $RoleTopic2, type($role1, $RoleType1), type($role2, $RoleType2), type($Association, $AssociationType) order by $Topic?";
+                break;
+                
+            case TopicOccurrenceHehe:
+                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $Topic, $TopicName, $Occurrence, $OccurrenceType, $OccurrenceValue from topic-name($Topic, $name), value($name, $TopicName), str:contains($TopicName, \"Puccini\"), occurrence($Topic, $Occurrence), type($Occurrence,$OccurrenceType), {resource($Occurrence,$OccurrenceValue) | value($Occurrence,$OccurrenceValue)} order by $Topic?";
+                break;  
+                
             default:
                 // other mode
                 ss = "select * from hahaha";
