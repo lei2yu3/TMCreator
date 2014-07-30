@@ -427,3 +427,118 @@ public class Hehe {
         //
     }
 }
+
+
+/*
+
+搜索目标的下一级相关
+
+
+
+如果搜索目标是为occurrence，输出包含相关字符的occurrence以及包含该实例的topic
+
+
+
+
+import "http://psi.ontopia.net/tolog/string/" as str
+
+select $Occurrence, $OccurrenceType, $OccurrenceValue, $Topic, $TopicName from
+
+occurrence($Topic, $Occurrence), 
+type($Occurrence,$OccurrenceType),
+{resource($Occurrence,$OccurrenceValue) | 
+value($Occurrence,$OccurrenceValue)},
+str:contains($OccurrenceValue, "Puccini"),
+
+topic-name($Topic, $name), 
+value($name, $TopicName)
+
+order by $Occurrence?
+
+如果搜索目标是为association，输出该关联的关联角色
+
+
+
+
+
+
+
+
+import "http://psi.ontopia.net/tolog/string/" as str
+
+select $RoleTopic1, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from
+
+association($Association),
+type($Association, $AssociationType),
+topic-name($AssociationType, $AssociationName),
+value($AssociationName, $AssociationString), 
+str:contains($AssociationString, "Completed by"),
+
+role-player($role1, $RoleTopic1),
+association-role($Association, $role1),
+association-role($Association, $role2),
+role-player($role2, $RoleTopic2),
+$RoleTopic1 /= $RoleTopic2,
+
+type($role1, $RoleType1),
+type($role2, $RoleType2)
+
+order by $Association?
+
+如果搜索目标是为topic，输出该主题的关联类型以及实例，相关联的主题
+
+
+
+相关的关联和主题
+
+import "http://psi.ontopia.net/tolog/string/" as str
+select $Topic, $TopicName, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from
+
+topic-name($Topic, $name), 
+value($name, $TopicName),
+str:contains($TopicName, "Puccini"),
+
+role-player($role1, $Topic),
+association-role($Association, $role1),
+association-role($Association, $role2),
+role-player($role2, $RoleTopic2),
+$Topic /= $RoleTopic2,
+
+type($role1, $RoleType1),
+type($role2, $RoleType2),
+type($Association, $AssociationType)
+
+order by $Topic?
+
+
+
+
+包含的实例
+
+import "http://psi.ontopia.net/tolog/string/" as str
+
+select $Topic, $TopicName, $Occurrence, $OccurrenceType, $OccurrenceValue from
+
+topic-name($Topic, $name), 
+value($name, $TopicName),
+str:contains($TopicName, "Puccini"),
+
+occurrence($Topic, $Occurrence), 
+type($Occurrence,$OccurrenceType),
+{resource($Occurrence,$OccurrenceValue) | 
+value($Occurrence,$OccurrenceValue)}
+
+
+order by $Topic?
+
+
+
+
+
+
+如果去除select处的$TopicName，则结果将不显示重名的topicname
+
+
+ 
+
+ */
