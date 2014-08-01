@@ -1,11 +1,13 @@
 package com.test.query;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -21,7 +23,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 
 public class BuildMe {
     public static void main(String[] args) throws ClassNotFoundException,
-            SQLException {
+            SQLException, IOException {
 
         long START = 0;
         long END = 0;
@@ -76,6 +78,10 @@ public class BuildMe {
         TopicIF topicEmployer = builder.makeTopic();
         builder.makeTopicName(topicEmployer, "Employer");
 
+        // System.out.println(topicEmployment.getTopicNames().toString());
+        // System.out.println(topicEmployee.getTopicNames().toString());
+        // System.out.println(topicEmployer.getTopicNames().toString());
+
         // Book-Writer资源实例的，实例类型
         TopicIF occurenceBW = builder.makeTopic();
         builder.makeTopicName(occurenceBW, "0cc-BW");
@@ -114,26 +120,42 @@ public class BuildMe {
         while (result.next()) {
             // result.getXXX("OOO") 获取表中OOO字段的值，XXX为OOO字段的类型
             /*System.out.println(result.getInt("ID") + "--"
-                    + result.getString("Book") + "--"
+                    + result.getString("Name") + "--"
                     + result.getString("Writer") + "--"
                     + result.getString("Company") + "--"
                     + result.getString("Path"));*/
             // System.out.println("=========================");
 
-            tempBookString = result.getString("Book");
-            tempWriterString = result.getString("Writer");
-            tempCompanyString = result.getString("Company");
+            tempBookString = result.getString("Name") == null ? "null" : result.getString("Name");
+            // tempBookString = result.getString("Book") == null ? "null" : result.getString("Book");
+            tempWriterString = result.getString("Writer") == null ? "null" : result.getString("Writer");
+            tempCompanyString = result.getString("Company") == null ? "null" : result.getString("Company");
 
             if (!BookSList.contains(tempBookString)) {
                 BookSList.add(tempBookString);
+
+                TopicIF bookTopic = builder.makeTopic();
+                builder.makeTopicName(bookTopic, tempBookString);
+
+                bookTopicList.add(bookTopic);
             }
 
             if (!WriterSList.contains(tempWriterString)) {
                 WriterSList.add(tempWriterString);
+
+                TopicIF writerTopic = builder.makeTopic();
+                builder.makeTopicName(writerTopic, tempWriterString);
+
+                writerTopicList.add(writerTopic);
             }
 
             if (!CompanySList.contains(tempCompanyString)) {
                 CompanySList.add(tempCompanyString);
+
+                TopicIF companyTopic = builder.makeTopic();
+                builder.makeTopicName(companyTopic, tempCompanyString);
+
+                companyTopicList.add(companyTopic);
             }
 
             tempBookIndex = BookSList.indexOf(tempBookString);
@@ -168,47 +190,86 @@ public class BuildMe {
         System.out.println("WriterSList.size() = " + WriterSList.size());
         System.out.println("CompanySList.size() = " + CompanySList.size());
 
+        System.out.println("bookTopicList.size() = " + bookTopicList.size());
+        System.out.println("writerTopicList.size() = " + writerTopicList.size());
+        System.out.println("companyTopicList.size() = " + companyTopicList.size());
+
         for (Row rr : RowList) {
-            // tempBookString = rr.getBook().getString();
             tempWriterString = rr.getWriter().getString();
             tempBookIndex = rr.getWriter().getBookIndex();
             tempCompanyIndex = rr.getWriter().getCompanyIndex();
+            
+            if (WriterSList.contains(tempWriterString)){
 
-            // tempCompanyString = rr.getCompany().getString();
+                // wTopic
+                tempWriterIndex = WriterSList.indexOf(tempWriterString);
+//                writerTopicList.get(tempWriterIndex);
+                
+                // bTopic
+//                bookTopicList.get(tempBookIndex);
+                
+                // cTopic
+//                companyTopicList.get(tempCompanyIndex);
 
-            // w存在与链表中，则创建w主题，w-b实例，w-c关联，然后从链表中删除w
-            // w不存与链表中，则找到之前同名的w，不创建w主题，创建w-b实例，w-c关联
-            if (WriterSList.contains(tempWriterString)) {
-
-                // writer topic
-                TopicIF writerTopic = builder.makeTopic();
-                builder.makeTopicName(writerTopic, tempCompanyString);
-
-                // name topic
-                TopicIF bookTopic = builder.makeTopic();
-                builder.makeTopicName(bookTopic, BookSList.get(tempBookIndex));
-                // 创建occurrence
-                builder.makeOccurrence(writerTopic, occurenceBW, tempBookString);
-
-                // TODO WARNING： 需要判断CompanyTopic是否存在
-                // company topic
-                TopicIF companyTopic = builder.makeTopic();
-                builder.makeTopicName(companyTopic,
-                        CompanySList.get(tempCompanyIndex));
-                // 创建assocation
-                AssociationIF associationWC = builder
-                        .makeAssociation(topicEmployment);
+                // occurrence
+                builder.makeOccurrence(writerTopicList.get(tempWriterIndex), occurenceBW, BookSList.get(tempBookIndex));
+                
+                // association
+                AssociationIF associationWC = builder.makeAssociation(topicEmployment);
                 builder.makeAssociationRole(associationWC, topicEmployee,
-                        writerTopic);
+                        writerTopicList.get(tempWriterIndex));
                 builder.makeAssociationRole(associationWC, topicEmployer,
-                        companyTopic);
+                        companyTopicList.get(tempCompanyIndex));
 
-                WriterSList.remove(WriterSList.indexOf(rr.getWriter()
-                        .getString()));
-            } else {
-                // TODO
             }
         }
+         
+
+         /*
+         
+         
+         for (Row rr : RowList) {
+             // tempBookString = rr.getBook().getString();
+             tempWriterString = rr.getWriter().getString();
+             tempBookIndex = rr.getWriter().getBookIndex();
+             tempCompanyIndex = rr.getWriter().getCompanyIndex();
+
+             // tempCompanyString = rr.getCompany().getString();
+
+             // w存在与链表中，则创建w主题，w-b实例，w-c关联，然后从链表中删除w
+             // w不存与链表中，则找到之前同名的w，不创建w主题，创建w-b实例，w-c关联
+             if (WriterSList.contains(tempWriterString)) {
+
+                 // writer topic
+                 TopicIF writerTopic = builder.makeTopic();
+                 builder.makeTopicName(writerTopic, tempCompanyString);
+
+                 // name topic
+                 TopicIF bookTopic = builder.makeTopic();
+                 builder.makeTopicName(bookTopic, BookSList.get(tempBookIndex));
+                 // 创建occurrence
+                 builder.makeOccurrence(writerTopic, occurenceBW, tempBookString);
+
+                 // TODO WARNING： 需要判断CompanyTopic是否存在
+                 // company topic
+                 TopicIF companyTopic = builder.makeTopic();
+                 builder.makeTopicName(companyTopic,
+                         CompanySList.get(tempCompanyIndex));
+                 // 创建assocation
+                 AssociationIF associationWC = builder
+                         .makeAssociation(topicEmployment);
+                 builder.makeAssociationRole(associationWC, topicEmployee,
+                         writerTopic);
+                 builder.makeAssociationRole(associationWC, topicEmployer,
+                         companyTopic);
+
+                 WriterSList.remove(WriterSList.indexOf(rr.getWriter()
+                         .getString()));
+             } else {
+                 // TODO
+             }
+         }*/
+        
         /*
         // 创建occurrence
         builder.makeOccurrence(writerTopic, occurenceNW, nameString);
@@ -222,13 +283,13 @@ public class BuildMe {
                companyTopic);
         */
 
-        /*
+        
         System.err.println("Imported (id " + topicmap.getObjectId() + ").");
         System.err.println("size = " + topicmap.getTopics().size());
 
         // writer tm to XTM
-        new XTMTopicMapWriter("dbtest.xtm").write(topicmap);
-
+        new XTMTopicMapWriter("hehetest.xtm").write(topicmap);
+/*
         // import XTM into database
         String xtmfile = "dbtest.xtm";
         String propfile = "db.xxx.props";
