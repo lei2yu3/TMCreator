@@ -84,7 +84,7 @@ public class BuildMe {
 
         // Book-Writer资源实例的，实例类型
         TopicIF occurenceBW = builder.makeTopic();
-        builder.makeTopicName(occurenceBW, "0cc-BW");
+        builder.makeTopicName(occurenceBW, "BWocc");
 
         // temp topic
         // TopicIF bookTopic = null;
@@ -99,9 +99,9 @@ public class BuildMe {
         //
         // =====================================================================
 
-        ArrayList<String> BookSList = new ArrayList<String>();
-        ArrayList<String> WriterSList = new ArrayList<String>();
-        ArrayList<String> CompanySList = new ArrayList<String>();
+        ArrayList<String> bookSList = new ArrayList<String>();
+        ArrayList<String> writerSList = new ArrayList<String>();
+        ArrayList<String> companySList = new ArrayList<String>();
 
         ArrayList<Row> RowList = new ArrayList<Row>();
 
@@ -113,26 +113,32 @@ public class BuildMe {
         String tempWriterString = null;
         String tempCompanyString = null;
 
-        int count = 0;
+        // int count = 0;
 
         START = System.currentTimeMillis();
 
         while (result.next()) {
             // result.getXXX("OOO") 获取表中OOO字段的值，XXX为OOO字段的类型
-            /*System.out.println(result.getInt("ID") + "--"
+            /*
+            System.out.println(result.getInt("ID") + "--"
                     + result.getString("Name") + "--"
                     + result.getString("Writer") + "--"
                     + result.getString("Company") + "--"
-                    + result.getString("Path"));*/
+                    + result.getString("Path"));
+            */
             // System.out.println("=========================");
 
-            tempBookString = result.getString("Name") == null ? "null" : result.getString("Name");
-            // tempBookString = result.getString("Book") == null ? "null" : result.getString("Book");
-            tempWriterString = result.getString("Writer") == null ? "null" : result.getString("Writer");
-            tempCompanyString = result.getString("Company") == null ? "null" : result.getString("Company");
+            tempBookString = result.getString("Name") == null ? "null" : result
+                    .getString("Name");
+            // tempBookString = result.getString("Book") == null ? "null" :
+            // result.getString("Book");
+            tempWriterString = result.getString("Writer") == null ? "null"
+                    : result.getString("Writer");
+            tempCompanyString = result.getString("Company") == null ? "null"
+                    : result.getString("Company");
 
-            if (!BookSList.contains(tempBookString)) {
-                BookSList.add(tempBookString);
+            if (!bookSList.contains(tempBookString)) {
+                bookSList.add(tempBookString);
 
                 TopicIF bookTopic = builder.makeTopic();
                 builder.makeTopicName(bookTopic, tempBookString);
@@ -140,8 +146,8 @@ public class BuildMe {
                 bookTopicList.add(bookTopic);
             }
 
-            if (!WriterSList.contains(tempWriterString)) {
-                WriterSList.add(tempWriterString);
+            if (!writerSList.contains(tempWriterString)) {
+                writerSList.add(tempWriterString);
 
                 TopicIF writerTopic = builder.makeTopic();
                 builder.makeTopicName(writerTopic, tempWriterString);
@@ -149,8 +155,8 @@ public class BuildMe {
                 writerTopicList.add(writerTopic);
             }
 
-            if (!CompanySList.contains(tempCompanyString)) {
-                CompanySList.add(tempCompanyString);
+            if (!companySList.contains(tempCompanyString)) {
+                companySList.add(tempCompanyString);
 
                 TopicIF companyTopic = builder.makeTopic();
                 builder.makeTopicName(companyTopic, tempCompanyString);
@@ -158,13 +164,13 @@ public class BuildMe {
                 companyTopicList.add(companyTopic);
             }
 
-            tempBookIndex = BookSList.indexOf(tempBookString);
-            tempWriterIndex = WriterSList.indexOf(tempWriterString);
-            tempCompanyIndex = CompanySList.indexOf(tempCompanyString);
+            tempBookIndex = bookSList.indexOf(tempBookString);
+            tempWriterIndex = writerSList.indexOf(tempWriterString);
+            tempCompanyIndex = companySList.indexOf(tempCompanyString);
 
-            // System.out.println(BookSList);
-            // System.out.println(WriterSList);
-            // System.out.println(CompanySList);
+            // System.out.println(bookSList);
+            // System.out.println(writerSList);
+            // System.out.println(companySList);
 
             // System.out.println(tempBookIndex);
             // System.out.println(tempWriterIndex);
@@ -178,44 +184,46 @@ public class BuildMe {
             Row resultRow = new Row(resultBook, resultWriter, resultCompany);
             RowList.add(resultRow);
 
-            count++;
+            // count++;
         }
 
         END = System.currentTimeMillis();
         System.out.println("while (result.next()) Time Cost: " + (END - START)
                 + "ms (" + END + "-" + "" + START + ")\n");
 
-        System.out.println("count = " + count);
-        System.out.println("BookSList.size() = " + BookSList.size());
-        System.out.println("WriterSList.size() = " + WriterSList.size());
-        System.out.println("CompanySList.size() = " + CompanySList.size());
+        // System.out.println("count = " + count);
+        System.out.println("bookSList.size() = " + bookSList.size());
+        System.out.println("writerSList.size() = " + writerSList.size());
+        System.out.println("companySList.size() = " + companySList.size());
 
         System.out.println("bookTopicList.size() = " + bookTopicList.size());
-        System.out.println("writerTopicList.size() = " + writerTopicList.size());
-        System.out.println("companyTopicList.size() = " + companyTopicList.size());
+        System.out
+                .println("writerTopicList.size() = " + writerTopicList.size());
+        System.out.println("companyTopicList.size() = "
+                + companyTopicList.size());
 
         for (Row rr : RowList) {
             tempWriterString = rr.getWriter().getString();
             tempBookIndex = rr.getWriter().getBookIndex();
             tempCompanyIndex = rr.getWriter().getCompanyIndex();
-            
-            if (WriterSList.contains(tempWriterString)){
+
+            if (writerSList.contains(tempWriterString)) {
 
                 // wTopic
-                tempWriterIndex = WriterSList.indexOf(tempWriterString);
-//                writerTopicList.get(tempWriterIndex);
-                
-                // bTopic
-//                bookTopicList.get(tempBookIndex);
-                
-                // cTopic
-//                companyTopicList.get(tempCompanyIndex);
+                tempWriterIndex = writerSList.indexOf(tempWriterString);
+
+                // get recent topic
+                // writerTopicList.get(tempWriterIndex);
+                // bookTopicList.get(tempBookIndex);
+                // companyTopicList.get(tempCompanyIndex);
 
                 // occurrence
-                builder.makeOccurrence(writerTopicList.get(tempWriterIndex), occurenceBW, BookSList.get(tempBookIndex));
-                
+                builder.makeOccurrence(writerTopicList.get(tempWriterIndex),
+                        occurenceBW, bookSList.get(tempBookIndex));
+
                 // association
-                AssociationIF associationWC = builder.makeAssociation(topicEmployment);
+                AssociationIF associationWC = builder
+                        .makeAssociation(topicEmployment);
                 builder.makeAssociationRole(associationWC, topicEmployee,
                         writerTopicList.get(tempWriterIndex));
                 builder.makeAssociationRole(associationWC, topicEmployer,
@@ -223,53 +231,52 @@ public class BuildMe {
 
             }
         }
-         
 
-         /*
-         
-         
-         for (Row rr : RowList) {
-             // tempBookString = rr.getBook().getString();
-             tempWriterString = rr.getWriter().getString();
-             tempBookIndex = rr.getWriter().getBookIndex();
-             tempCompanyIndex = rr.getWriter().getCompanyIndex();
-
-             // tempCompanyString = rr.getCompany().getString();
-
-             // w存在与链表中，则创建w主题，w-b实例，w-c关联，然后从链表中删除w
-             // w不存与链表中，则找到之前同名的w，不创建w主题，创建w-b实例，w-c关联
-             if (WriterSList.contains(tempWriterString)) {
-
-                 // writer topic
-                 TopicIF writerTopic = builder.makeTopic();
-                 builder.makeTopicName(writerTopic, tempCompanyString);
-
-                 // name topic
-                 TopicIF bookTopic = builder.makeTopic();
-                 builder.makeTopicName(bookTopic, BookSList.get(tempBookIndex));
-                 // 创建occurrence
-                 builder.makeOccurrence(writerTopic, occurenceBW, tempBookString);
-
-                 // TODO WARNING： 需要判断CompanyTopic是否存在
-                 // company topic
-                 TopicIF companyTopic = builder.makeTopic();
-                 builder.makeTopicName(companyTopic,
-                         CompanySList.get(tempCompanyIndex));
-                 // 创建assocation
-                 AssociationIF associationWC = builder
-                         .makeAssociation(topicEmployment);
-                 builder.makeAssociationRole(associationWC, topicEmployee,
-                         writerTopic);
-                 builder.makeAssociationRole(associationWC, topicEmployer,
-                         companyTopic);
-
-                 WriterSList.remove(WriterSList.indexOf(rr.getWriter()
-                         .getString()));
-             } else {
-                 // TODO
-             }
-         }*/
+        /*
         
+        
+        for (Row rr : RowList) {
+            // tempBookString = rr.getBook().getString();
+            tempWriterString = rr.getWriter().getString();
+            tempBookIndex = rr.getWriter().getBookIndex();
+            tempCompanyIndex = rr.getWriter().getCompanyIndex();
+
+            // tempCompanyString = rr.getCompany().getString();
+
+            // w存在与链表中，则创建w主题，w-b实例，w-c关联，然后从链表中删除w
+            // w不存与链表中，则找到之前同名的w，不创建w主题，创建w-b实例，w-c关联
+            if (writerSList.contains(tempWriterString)) {
+
+                // writer topic
+                TopicIF writerTopic = builder.makeTopic();
+                builder.makeTopicName(writerTopic, tempCompanyString);
+
+                // name topic
+                TopicIF bookTopic = builder.makeTopic();
+                builder.makeTopicName(bookTopic, bookSList.get(tempBookIndex));
+                // 创建occurrence
+                builder.makeOccurrence(writerTopic, occurenceBW, tempBookString);
+
+                // TODO WARNING： 需要判断CompanyTopic是否存在
+                // company topic
+                TopicIF companyTopic = builder.makeTopic();
+                builder.makeTopicName(companyTopic,
+                        companySList.get(tempCompanyIndex));
+                // 创建assocation
+                AssociationIF associationWC = builder
+                        .makeAssociation(topicEmployment);
+                builder.makeAssociationRole(associationWC, topicEmployee,
+                        writerTopic);
+                builder.makeAssociationRole(associationWC, topicEmployer,
+                        companyTopic);
+
+                writerSList.remove(writerSList.indexOf(rr.getWriter()
+                        .getString()));
+            } else {
+                // TODO
+            }
+        }*/
+
         /*
         // 创建occurrence
         builder.makeOccurrence(writerTopic, occurenceNW, nameString);
@@ -283,13 +290,12 @@ public class BuildMe {
                companyTopic);
         */
 
-        
         System.err.println("Imported (id " + topicmap.getObjectId() + ").");
         System.err.println("size = " + topicmap.getTopics().size());
 
         // writer tm to XTM
         new XTMTopicMapWriter("hehetest.xtm").write(topicmap);
-/*
+        /*
         // import XTM into database
         String xtmfile = "dbtest.xtm";
         String propfile = "db.xxx.props";

@@ -16,7 +16,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 
-// 基本单元
+// base cell
 class Cell {
 
     private String string;
@@ -33,7 +33,6 @@ class Cell {
         // setIndex(0);
     }
 
-    // get&set String
     public String getString() {
         return string;
     }
@@ -46,13 +45,13 @@ class Cell {
     // public int getIndex() {
     // return index;
     // }
-    //
+
     // private void setIndex(int n) {
     // index = n;
     // }
 }
 
-// Book 包含Writer索引
+// Book keyword includes WriterIndex
 class Book extends Cell {
 
     private int WriterIndex;
@@ -67,7 +66,6 @@ class Book extends Cell {
         setWriterIndex(ii);
     }
 
-    // get&set WriterIndex
     public int getWriterIndex() {
         return WriterIndex;
     }
@@ -77,7 +75,7 @@ class Book extends Cell {
     }
 }
 
-// Writer 包含Book和Company索引
+// Writer keyword includes BookIndex & CompanyIndex
 class Writer extends Cell {
 
     private int BookIndex;
@@ -95,7 +93,6 @@ class Writer extends Cell {
         setCompanyIndex(jj);
     }
 
-    // get&set BookIndex
     public int getBookIndex() {
         return BookIndex;
     }
@@ -104,7 +101,6 @@ class Writer extends Cell {
         BookIndex = i;
     }
 
-    // get&set CompanyIndex
     public int getCompanyIndex() {
         return CompanyIndex;
     }
@@ -114,7 +110,7 @@ class Writer extends Cell {
     }
 }
 
-// Company 包含Writer索引
+// Company keyword includes WriterIndex
 class Company extends Cell {
 
     private int WriterIndex;
@@ -129,7 +125,6 @@ class Company extends Cell {
         setWriterIndex(ii);
     }
 
-    // get&set WriterIndex
     public int getWriterIndex() {
         return WriterIndex;
     }
@@ -139,7 +134,7 @@ class Company extends Cell {
     }
 }
 
-// 每行包含三个字段，Book，Writer，Company
+// one Row includes there keywords, Book, Writer & Company
 class Row {
 
     private Book rowBook;// = new Book();
@@ -185,7 +180,7 @@ class Row {
     // }
 }
 
-public class Hehe {
+public class Item {
 
     // Book <-- Writer <--> Company
     // Book是Writer的Occurrence，Writer和Company是一对Association
@@ -233,17 +228,17 @@ public class Hehe {
 
         // 添加Writer-Comany关联
         TopicIF topicEmployment = builder.makeTopic();
-        builder.makeTopicBook(topicEmployment, "Employment");
+        builder.makeTopicName(topicEmployment, "Employment");
 
         TopicIF topicEmployee = builder.makeTopic();
-        builder.makeTopicBook(topicEmployee, "Employee");
+        builder.makeTopicName(topicEmployee, "Employee");
 
         TopicIF topicEmployer = builder.makeTopic();
-        builder.makeTopicBook(topicEmployer, "Employer");
+        builder.makeTopicName(topicEmployer, "Employer");
 
         // 添加Book-Writer资源实例
         TopicIF occurenceNW = builder.makeTopic();
-        builder.makeTopicBook(occurenceNW, "0ccNW");
+        builder.makeTopicName(occurenceNW, "0ccNW");
         */
 
         /*
@@ -422,14 +417,15 @@ public class Hehe {
         System.out.println(l);
         */
 
+        /*
         // 键盘输入
-        // try {
-        // String queryInput = (new BufferedReader(new
-        // InputStreamReader(System.in))).readLine();
-        // System.out.println("hah= " + queryInput);
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
-        //
+        try {
+        String queryInput = (new BufferedReader(new
+        InputStreamReader(System.in))).readLine();
+        System.out.println("hah= " + queryInput);
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        */
     }
 }
