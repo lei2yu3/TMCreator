@@ -105,8 +105,8 @@ class Writer extends Cell {
         return CompanyIndex;
     }
 
-    private void setCompanyIndex(int i) {
-        CompanyIndex = i;
+    private void setCompanyIndex(int j) {
+        CompanyIndex = j;
     }
 }
 
@@ -135,6 +135,8 @@ class Company extends Cell {
 }
 
 // one Row includes there keywords, Book, Writer & Company
+// Book <--occurrence-- Writer <--association--> Company
+// Book是Writer的Occurrence，Writer和Company是一对Association
 class Row {
 
     private Book rowBook;// = new Book();
@@ -147,9 +149,9 @@ class Row {
         rowCompany = new Company();
     }
 
-    //
-    public Row(Book i, Writer w, Company c) {
-        rowBook = new Book(i.getString(), i.getWriterIndex());
+    // 
+    public Row(Book b, Writer w, Company c) {
+        rowBook = new Book(b.getString(), b.getWriterIndex());
         rowWriter = new Writer(w.getString(), w.getBookIndex(),
                 w.getCompanyIndex());
         rowCompany = new Company(c.getString(), c.getWriterIndex());
@@ -182,8 +184,6 @@ class Row {
 
 public class Item {
 
-    // Book <-- Writer <--> Company
-    // Book是Writer的Occurrence，Writer和Company是一对Association
     // static String[][] HahaArray = { { "aaa", "MMM", "xx1" },
     // { "bbb", "MMM", "yy1" }, { "aaa", "NNN", "xx1" },
     // { "ccc", "NNN", "xx1" }, { "bbb", "OOO", "yy1" },
