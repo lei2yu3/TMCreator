@@ -16,24 +16,6 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 // query the topic map
 public class QueryMe {
 
-//    final static int VALUE = 1;
-//    final static int VALUE_LIKE = 2;
-//    final static int VALUE_STRING = 3;
-//    final static int VALUE_LIKE_STRING = 4;
-//    final static int OCCURRENCE_all = 5;
-//    final static int TOPIC_all = 6;
-//    final static int ASSOCIATION_all = 7;
-//    final static int OCCURRENCE_specified = 8;
-//    final static int ASSOCIATION_specified = 9;
-//
-//    final static int OccurrenceHehe = 11;
-//    final static int AssociationHehe = 12;
-//    final static int TopicAssociationHehe = 13;
-//    final static int TopicOccurrenceHehe = 14;
-//
-//    final static int OccurrenceTypeHehe = 15;
-//    final static int AssociationTypeHehe = 16;
-
     public enum Tolog {
 
         // 11 value谓词，大小写敏感，需全词匹配。仅搜索出TopicName与指定NAME字符串完全匹配的Topic
@@ -114,14 +96,14 @@ public class QueryMe {
         // }
     };
 
-    static String keyWord = "Puccini";
-    static Tolog tologStatement = Tolog.VALUE;
+    // query key word and statement
+    static String keyWord = "川西致密气藏水平井控水压裂技术研究";
+    static Tolog tologStatement = Tolog.OCCURRENCE;
     
     public static void main(String[] args) throws IOException {
 
-
-         for(Tolog t : Tolog.values())
-         System.out.println(t.index + " | " + t.statement);
+        // for(Tolog t : Tolog.values())
+        // System.out.println(t.index + " | " + t.statement);
          
         long START, END;
         String ss = null;
@@ -129,8 +111,8 @@ public class QueryMe {
         TopicMapStoreIF rdbmsSrore = new InMemoryTopicMapStore();
         TopicMapIF tm = rdbmsSrore.getTopicMap();
         TopicMapImporterIF reader = new XTMTopicMapReader(new File(
-        // "dbtest.xtm"));
-              "hehetest.xtm"));
+         "dbtest.xtm"));
+        //      "hehetest.xtm"));
         
         reader.importInto(tm);
 
@@ -172,85 +154,19 @@ public class QueryMe {
             default:
                 System.out.println("-----!!!ERROR Tolog Statement!!!-----");
                 break;
-            
-/*                
-            case VALUE:
-                ss = "select $name from topic-name($topic, $name), value($name, \"王春\")?";
-                break;
-            case VALUE_LIKE:
-                ss = "select $name from topic-name($topic, $name), value-like($name, \"王春\")?";
-                break;
-            case VALUE_STRING:
-                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str  topic-name($TOPIC, $n ), value($n ,$SI), str:contains($SI, \"王春\")?\"";
-                break;
-            case VALUE_LIKE_STRING:// ERROR！
-                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str  topic-name($TOPIC, $n ), value-like($n ,$SI), str:contains($SI, \"王春\")?\"";
-                break;
-            
-                
-            case TOPIC_All:
-                ss = "select $s from topic-name($topic, $name), value($name, $s)?";
-                break;
-            case ASSOCIATION_All:
-                ss = "association($ass)?";
-                break;
-            case OCCURRENCE_All:
-                ss = "select $s from occurrence($topic, $occ), value($occ, $s)?";
-                break;
-            case TOPIC_Part:
-                ss = tologStatement.getStatement();
-                break;
-            case ASSOCIATION_Part:
-                // ss = "select $s from association($ASSOC), type($ASSOC, $TYPE), topic-name($TYPE,$n), value($n,$s)?";
-                ss = "select $n from association($ASSOC), type($ASSOC, $TYPE), topic-name($TYPE,$n), value($n, \"Employment\")?";
-                break;
-            case OCCURRENCE_Part:
-                // ss = "select $s,$occ from occurrence($topic, $occ), value-like($occ, \"川西致密气藏水平井控水压裂技术研究\"), topic-name($topic, $name), value($name, $s)?";
-                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $s,$occ from occurrence($topic, $occ), value($occ, $SI), str:contains($SI, \"川西致密\"), topic-name($topic, $name), value($name, $s)?";
-                break;
-
-                
-            case TOPIC_Association:
-                // 31 
-                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $Topic, $TopicName, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from topic-name($Topic, $name), value($name, $TopicName), str:contains($TopicName, \"李亚文\"), role-player($role1, $Topic), association-role($Association, $role1), association-role($Association, $role2), role-player($role2, $RoleTopic2), $Topic /= $RoleTopic2, type($role1, $RoleType1), type($role2, $RoleType2), type($Association, $AssociationType) order by $Topic?";
-                break;
-            case TOPIC_Occurrence:
-                // 32
-                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $Topic, $TopicName, $Occurrence, $OccurrenceType, $OccurrenceValue from topic-name($Topic, $name), value($name, $TopicName), str:contains($TopicName, \"李亚文\"), occurrence($Topic, $Occurrence), type($Occurrence,$OccurrenceType), {resource($Occurrence,$OccurrenceValue) | value($Occurrence,$OccurrenceValue)} order by $Topic?";
-                break;
-            case ASSOCIATION:
-                // 33
-                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $RoleTopic1, $RoleType1, $Association, $AssociationType, $RoleTopic2, $RoleType2 from association($Association), type($Association, $AssociationType), topic-name($AssociationType, $AssociationName), value($AssociationName, $AssociationString), str:contains($AssociationString, \"Employment\"), role-player($role1, $RoleTopic1),association-role($Association, $role1), association-role($Association, $role2), role-player($role2, $RoleTopic2), $RoleTopic1 /= $RoleTopic2, type($role1, $RoleType1), type($role2, $RoleType2) order by $Association?";
-                break;
-            case ASSOCIATION_Type:
-                // 34
-                ss = tologStatement.getStatement();
-                break;
-            case OCCURRENCE:
-                // 35
-                ss = "import \"http://psi.ontopia.net/tolog/string/\" as str select $Occurrence, $OccurrenceType, $OccurrenceValue, $Topic, $TopicName from occurrence($Topic, $Occurrence), type($Occurrence,$OccurrenceType), {resource($Occurrence,$OccurrenceValue) | value($Occurrence,$OccurrenceValue)}, str:contains($OccurrenceValue, \"2010年区块登记与\"), topic-name($Topic, $name), value($name, $TopicName) order by $Occurrence?";
-                break;
-            case OCCURRENCE_Type:
-                // 36
-                ss = tologStatement.getStatement();
-                break;
-
-                
-            default:
-                ss = "select *";
-                break;
-*/
         }
 
         System.out.println("search for : \n" + ss);
         // System.out.println(wrapper.queryForMaps(ss).size());
 
         START = System.currentTimeMillis();
+        
         @SuppressWarnings("rawtypes")
         List list = wrapper.queryForMaps(ss);
         // List list = wrapper.queryForList(ss);
 
         END = System.currentTimeMillis();
+        
         System.out.println("queryForMaps() Time Cost: " + (END - START) + "ms ("
                 + END + "-" + "" + START + ")");
 
@@ -259,11 +175,15 @@ public class QueryMe {
         System.out.println("Query result : \n");
 
         START = System.currentTimeMillis();
+        
         for (int q = 0; q < list.size(); q++) {
             System.out.println(list.get(q));
         }
+        
         System.out.println("\nresult SIZE = " + list.size());
+        
         END = System.currentTimeMillis();
+        
         System.out.println("println(list.get(q)) Time Cost: " + (END - START) + "ms ("
                 + END + "-" + "" + START + ")\n");
 

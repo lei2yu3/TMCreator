@@ -1,5 +1,6 @@
 package com.test.query;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -252,7 +253,7 @@ public class BuildMe {
 
         // writer topic map to XTM
         new XTMTopicMapWriter("HeheTest.xtm").write(topicmap);
-        /*
+        
         // import XTM into database
         String xtmfile = "dbtest.xtm";
         String propfile = "db.xxx.props";
@@ -262,11 +263,11 @@ public class BuildMe {
         TopicMapIF tm = rdbmsSrore.getTopicMap();
 
         // import XTM document into topic map object
-        TopicMapImporterIF reader = new XTMTopicMapReader(new Book(xtmfile));
+        TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmfile));
         reader.importInto(tm);
         System.err.println("Imported (id " + tm.getObjectId() + ").");
         System.err.println("size = " + tm.getTopics().size());
-        */
+        
 
     }
 }
