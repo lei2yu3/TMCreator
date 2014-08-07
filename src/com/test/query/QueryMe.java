@@ -16,6 +16,12 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 // query the topic map
 public class QueryMe {
 
+    // query key word and statement
+    static String keyWord = "川西致密气藏水平井控水压裂技术研究";
+    static Tolog tologStatement = Tolog.OCCURRENCE;
+    static String xtmFile = "dbtest.xtm";
+    // xtmFile = hehetest
+    
     public enum Tolog {
 
         // 11 value谓词，大小写敏感，需全词匹配。仅搜索出TopicName与指定NAME字符串完全匹配的Topic
@@ -40,7 +46,7 @@ public class QueryMe {
             "association($ass)?"),
         // 23 find topic which have occurrence
         OCCURRENCE_All(23, 
-            "select $s from occurrence($topic, $occ), value($occ, $s)?"),
+            "select $s from occurrence($topic, $occ), {resource($occ,$s) | value($occ,$s)}?"),
         // 24
         TOPIC_Part(24, 
                 ""),
@@ -95,10 +101,6 @@ public class QueryMe {
         // this.index = ss;
         // }
     };
-
-    // query key word and statement
-    static String keyWord = "川西致密气藏水平井控水压裂技术研究";
-    static Tolog tologStatement = Tolog.OCCURRENCE;
     
     public static void main(String[] args) throws IOException {
 
@@ -110,9 +112,7 @@ public class QueryMe {
 
         TopicMapStoreIF rdbmsSrore = new InMemoryTopicMapStore();
         TopicMapIF tm = rdbmsSrore.getTopicMap();
-        TopicMapImporterIF reader = new XTMTopicMapReader(new File(
-         "dbtest.xtm"));
-        //      "hehetest.xtm"));
+        TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmFile));
         
         reader.importInto(tm);
 
@@ -152,7 +152,7 @@ public class QueryMe {
                 break;
     
             default:
-                System.out.println("-----!!!ERROR Tolog Statement!!!-----");
+                System.err.println("-----!!!ERROR Tolog Statement!!!-----");
                 break;
         }
 
@@ -167,7 +167,7 @@ public class QueryMe {
 
         END = System.currentTimeMillis();
         
-        System.out.println("queryForMaps() Time Cost: " + (END - START) + "ms ("
+        System.err.println("queryForMaps() Time Cost: " + (END - START) + "ms ("
                 + END + "-" + "" + START + ")");
 
         System.out.println("=============================");
@@ -184,7 +184,7 @@ public class QueryMe {
         
         END = System.currentTimeMillis();
         
-        System.out.println("println(list.get(q)) Time Cost: " + (END - START) + "ms ("
+        System.err.println("println(list.get(q)) Time Cost: " + (END - START) + "ms ("
                 + END + "-" + "" + START + ")\n");
 
         rdbmsSrore.commit();

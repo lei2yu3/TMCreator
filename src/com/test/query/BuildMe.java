@@ -24,6 +24,11 @@ import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 
 // build the topic map
 public class BuildMe {
+
+    static String OutputXTM = "HeheTest.xtm";
+    static String InputXTM = "HeheTest.xtm";
+    static String PropFile = "db.xxx.props";
+    
     public static void main(String[] args) throws ClassNotFoundException,
             SQLException, IOException {
 
@@ -252,22 +257,20 @@ public class BuildMe {
 
         System.out.println("Imported (id " + topicmap.getObjectId() + ").");
         System.out.println("size = " + topicmap.getTopics().size());
-
+        
         // write topic map to XTM
         System.err.println("\nWriting topic map to XTM...\n");
-        new XTMTopicMapWriter("HeheTest.xtm").write(topicmap);
+        new XTMTopicMapWriter(OutputXTM).write(topicmap);
         
         // import XTM into database
         System.err.println("\nImportint XTM into database...\n");
-        String xtmfile = "HeheTest.xtm";
-        String propfile = "db.xxx.props";
-        TopicMapStoreIF rdbmsSrore = new RDBMSTopicMapStore(propfile);
+        TopicMapStoreIF rdbmsSrore = new RDBMSTopicMapStore(PropFile);
 
         // get new topic map object
         TopicMapIF tm = rdbmsSrore.getTopicMap();
 
         // import XTM document into topic map object
-        TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmfile));
+        TopicMapImporterIF reader = new XTMTopicMapReader(new File(InputXTM));
         reader.importInto(tm);
         System.out.println("Imported (id " + tm.getObjectId() + ").");
         System.out.println("size = " + tm.getTopics().size());
