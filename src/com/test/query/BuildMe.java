@@ -47,7 +47,7 @@ public class BuildMe {
 
         Class.forName(driverName);
         connection = DriverManager.getConnection(dbURL, userName, userPwd);
-        System.out.println("Connection Successful!");
+        System.err.println("\nConnection Successful...\n");
 
         statement = connection.createStatement();
         // String query =
@@ -124,6 +124,7 @@ public class BuildMe {
         START = System.currentTimeMillis();
 
         // traverse result
+        System.out.println("\nReading information from database...\n");
         while (result.next()) {
             // result.getXXX("OOO") 获取搜索结果表中OOO字段的值，XXX为OOO字段的类型
             /*
@@ -215,6 +216,7 @@ public class BuildMe {
                 + companyTopicList.size());
 
         // traverse Row list, make Occurrence & Association
+        System.err.println("\nTopic Map Building...\n");
         for (Row rr : RowList) {
 
             // 通过Row分别获取与writer相关的book和company的index
@@ -248,14 +250,16 @@ public class BuildMe {
             }
         }
 
-        System.err.println("Imported (id " + topicmap.getObjectId() + ").");
-        System.err.println("size = " + topicmap.getTopics().size());
+        System.out.println("Imported (id " + topicmap.getObjectId() + ").");
+        System.out.println("size = " + topicmap.getTopics().size());
 
-        // writer topic map to XTM
+        // write topic map to XTM
+        System.err.println("\nWriting topic map to XTM...\n");
         new XTMTopicMapWriter("HeheTest.xtm").write(topicmap);
         
         // import XTM into database
-        String xtmfile = "dbtest.xtm";
+        System.err.println("\nImportint XTM into database...\n");
+        String xtmfile = "HeheTest.xtm";
         String propfile = "db.xxx.props";
         TopicMapStoreIF rdbmsSrore = new RDBMSTopicMapStore(propfile);
 
@@ -265,9 +269,17 @@ public class BuildMe {
         // import XTM document into topic map object
         TopicMapImporterIF reader = new XTMTopicMapReader(new File(xtmfile));
         reader.importInto(tm);
-        System.err.println("Imported (id " + tm.getObjectId() + ").");
-        System.err.println("size = " + tm.getTopics().size());
-        
+        System.out.println("Imported (id " + tm.getObjectId() + ").");
+        System.out.println("size = " + tm.getTopics().size());
 
+        result.close();
+        statement.close();
+        connection.close();
+
+        inmemoryStore.close();
+        rdbmsSrore.commit();
+        rdbmsSrore.close();
+        
+        System.err.println("\nDone...\n");
     }
 }
