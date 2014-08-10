@@ -16,7 +16,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 // query the topic map
 public class QueryMe {
 
-    // query key word and statement
+    // query key word, query tolog statement & input xtm file
     static String keyWord = "川西致密气藏水平井控水压裂技术研究";
     static Tolog tologStatement = Tolog.OCCURRENCE;
     static String xtmFile = "dbtest.xtm";
@@ -131,7 +131,7 @@ public class QueryMe {
             case VALUE_STRING:
             case VALUE_LIKE_STRING:// ERROR！
             
-            // 基本TM元素的搜索
+            // basic tm elements
             case TOPIC_All:
             case ASSOCIATION_All:
             case OCCURRENCE_All:

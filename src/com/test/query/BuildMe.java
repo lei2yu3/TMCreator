@@ -28,7 +28,7 @@ public class BuildMe {
     static String OutputXTM = "HeheTest.xtm";
     static String InputXTM = "HeheTest.xtm";
     static String PropFile = "db.xxx.props";
-    
+
     public static void main(String[] args) throws ClassNotFoundException,
             SQLException, IOException {
 
@@ -42,13 +42,13 @@ public class BuildMe {
 
         START = System.currentTimeMillis();
 
-        String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; // 加载JDBC驱动
-        String dbURL = "jdbc:sqlserver://localhost:1433; DatabaseName=xxx"; // 连接服务器和数据库xxx
-        String userName = "sa"; // 用户名
-        String userPwd = "123123"; // 密码
+        String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        String dbURL = "jdbc:sqlserver://localhost:1433; DatabaseName=xxx";
+        String userName = "sa";
+        String userPwd = "123123";
         Connection connection = null;
         Statement statement = null;
-        ResultSet result = null; // set of the query result
+        ResultSet result = null;
 
         Class.forName(driverName);
         connection = DriverManager.getConnection(dbURL, userName, userPwd);
@@ -68,7 +68,7 @@ public class BuildMe {
                 + END + "-" + "" + START + ")\n");
 
         // =====================================================================
-        // topic map
+        // topic map basic elements
         // =====================================================================
 
         // 创建InMemory TM
@@ -95,7 +95,7 @@ public class BuildMe {
         builder.makeTopicName(occurenceBW, "occBW");
 
         // =====================================================================
-        // 
+        //
         // =====================================================================
 
         // Row list 从数据库中读取的每一条记录为一个Row
@@ -151,7 +151,7 @@ public class BuildMe {
 
             // 若result中字段的值不在string list中则加入，并创建相关的主题加入topic list
             if (!bookSList.contains(tempBookString)) {
-                
+
                 bookSList.add(tempBookString);
 
                 TopicIF bookTopic = builder.makeTopic();
@@ -161,7 +161,7 @@ public class BuildMe {
             }
 
             if (!writerSList.contains(tempWriterString)) {
-                
+
                 writerSList.add(tempWriterString);
 
                 TopicIF writerTopic = builder.makeTopic();
@@ -171,7 +171,7 @@ public class BuildMe {
             }
 
             if (!companySList.contains(tempCompanyString)) {
-                
+
                 companySList.add(tempCompanyString);
 
                 TopicIF companyTopic = builder.makeTopic();
@@ -257,11 +257,11 @@ public class BuildMe {
 
         System.out.println("Imported (id " + topicmap.getObjectId() + ").");
         System.out.println("size = " + topicmap.getTopics().size());
-        
+
         // write topic map to XTM
         System.err.println("\nWriting topic map to XTM...\n");
         new XTMTopicMapWriter(OutputXTM).write(topicmap);
-        
+
         // import XTM into database
         System.err.println("\nImportint XTM into database...\n");
         TopicMapStoreIF rdbmsSrore = new RDBMSTopicMapStore(PropFile);
@@ -282,7 +282,7 @@ public class BuildMe {
         inmemoryStore.close();
         rdbmsSrore.commit();
         rdbmsSrore.close();
-        
+
         System.err.println("\nDone...\n");
     }
 }
